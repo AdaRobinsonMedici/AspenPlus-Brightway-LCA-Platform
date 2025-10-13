@@ -1,6 +1,11 @@
-![Process Systems Engineering](PSE.png)
 
-![Framework](Interface.png)
+<p align="center">
+  <img src="PSE.png" alt="Process Systems Engineering" width="200"/>
+</p>
+
+<p align="center">
+  <img src="Interface.png" alt="Framework" width="200"/>
+</p>
 
 <p style="text-align: justify;">
 This Github repository is related to the conference paper "Open-source Automation of Aspen Plus simulation and Life Cycle Assessment for Carbon Capture: From Automation to Intelligent Scenario Optimization" presented on the E2DT 2025 conference in Italy, Palermo. It provides an open-source framework that couples Aspen Plus process simulations with the Python-based Brightway package to conduct Life Cycle Assessments (LCA). The approach is demonstrated on a well-studied, solvent-based post-combustion carbon capture process using Monoethanolamine (MEA) as a case study. Beside the full framework, tutorials are provided, explaining the most important functionalities of the Aspen-Python-Interface and Brightway.
