@@ -1,0 +1,10 @@
+INPUT: Test.inm
+MODNAME: apmain
+RUNID: Test
+NEW_RUNID: Test
+OLD_RUNID: Test
+PDF: Test.appdf
+USERNAME: Jonas
+XMOD: C:\Program Files\AspenTech\Aspen Plus V12.1\Engine\xeq\apmain
+SPONLY:
+DBCONN: _3853cub.ads
