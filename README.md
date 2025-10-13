@@ -1,10 +1,10 @@
 
 <p align="center">
-  <img src="PSE.png" alt="Process Systems Engineering" width="500"/>
+  <img src="PSE.png" alt="Process Systems Engineering" width="600"/>
 </p>
 
 <p align="center">
-  <img src="Interface.png" alt="Framework" width="500"/>
+  <img src="Interface.png" alt="Framework" width="600"/>
 </p>
 
 <p style="text-align: justify;">
