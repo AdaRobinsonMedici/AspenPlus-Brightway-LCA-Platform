@@ -1,0 +1,3879 @@
+
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+ + +                                                                         + +
+ + +                      ASPEN PLUS CALCULATION HISTORY                     + +
+ + +                                                                         + +
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+
+ ASPEN PLUS IS A TRADEMARK OF           HOTLINE:
+ ASPEN TECHNOLOGY, INC.                 U.S.A. 888/996-7100
+ 781/221-6400                           EUROPE (44) 1189-226555
+
+ PLATFORM: WIN-X64                                       JUNE 4, 2025        
+ VERSION: 40.0   Build 359                               WEDNESDAY   
+ INSTALLATION:                                           2:29:28 P.M.        
+
+ THIS COPY OF ASPEN PLUS LICENSED TO VIENNA UNIVERSITY OF TEC        
+
+
+      ASPEN PLUS (R) IS A PROPRIETARY PRODUCT OF ASPEN TECHNOLOGY, INC.
+      (ASPENTECH), AND MAY BE USED ONLY UNDER AGREEMENT WITH ASPENTECH.
+      RESTRICTED RIGHTS LEGEND:  USE, REPRODUCTION, OR DISCLOSURE BY THE
+      U.S. GOVERNMENT IS SUBJECT TO RESTRICTIONS SET FORTH IN 
+      (i) FAR 52.227-14, Alt. III, (ii) FAR 52.227-19, (iii) DFARS 
+      252.227-7013(c)(1)(ii), or (iv) THE ACCOMPANYING LICENSE AGREEMENT,
+      AS APPLICABLE. FOR PURPOSES OF THE FAR, THIS SOFTWARE SHALL BE DEEMED
+      TO BE "UNPUBLISHED" AND LICENSED WITH DISCLOSURE PROHIBITIONS.
+      CONTRACTOR/SUBCONTRACTOR: ASPEN TECHNOLOGY, INC. 20 CROSBY DRIVE,
+      BEDFORD, MA 01730.
+ *** INPUT SUMMARY ***
+
+ >>CURRENT RUN
+
+   ORIGINAL RUN                           JUNE 4, 2025        
+   2:29:28 P.M.                           WEDNESDAY   
+   INPUT FILE: _2913adv.inm
+   RUN ID : _2913adv
+          1    ;
+          2    ;Input file created by Aspen Plus Rel. 40.0 at 14:29:27 Wed Jun 4, 2025
+          3    ;Directory C:\Users\jkueng\2025_Project_assistant\OneDrive_2025-06-04\Run 1  Runid RUN 1
+          4    ;
+          5
+          6
+          7    DYNAMICS
+          8        DYNAMICS RESULTS=ON
+          9
+         10    IN-UNITS SI SHORT-LENGTH=mm
+         11
+         12    DEF-STREAMS CONVEN ALL
+         13
+         14    SIM-OPTIONS MASS-BAL-CHE=YES TLOWER=10. FLASH-MAXIT=300  &
+         15            GAMUS-BASIS=AQUEOUS
+         16
+         17    MODEL-OPTION
+         18
+         19    DATABANKS 'APV140 PURE39' / 'APV140 AQUEOUS' / 'APV140 SOLIDS' &
+         20             / 'APV140 INORGANIC' / NOASPENPCD
+         21
+         22    PROP-SOURCES 'APV140 PURE39' / 'APV140 AQUEOUS' /  &
+         23            'APV140 SOLIDS' / 'APV140 INORGANIC'
+         24
+         25    COMPONENTS
+         26        MEA C2H7NO /
+         27        H2O H2O /
+         28        CO2 CO2 /
+         29        H3O+ H3O+ /
+         30        OH- OH- /
+         31        HCO3- HCO3- /
+         32        CO3-2 CO3-2 /
+         33        MEAH+ C2H8NO+ /
+         34        MEACOO- C3H6NO3- /
+         35        N2 N2 /
+         36        O2 O2
+         37
+         38    HENRY-COMPS GLOBAL CO2 N2 O2
+         39
+         40    SOLVE
+         41        RUN-MODE MODE=SIM
+         42
+         43    CHEMISTRY MEA
+         44        STOIC 1 H2O -2.0 / H3O+ 1.0 / OH- 1.0
+         45        STOIC 2 CO2 -1.0 / H2O -2.0 / HCO3- 1.0 / H3O+ 1.0
+         46        STOIC 3 HCO3- -1.0 / H2O -1.0 / CO3-2 1.0 / H3O+ 1.0
+         47        STOIC 4 MEAH+ -1. / H2O -1. / MEA 1. / H3O+ 1.
+         48        STOIC 5 MEACOO- -1. / H2O -1. / MEA 1. / HCO3- 1.
+         49
+         50    FLOWSHEET
+         51        BLOCK ABSORBER IN=FLUEGAS LEANMEA WASHWAT OUT=FLUEOFF  &
+         52            RICHMEA WATSPLIT
+         53        BLOCK PUMP IN=RICHMEA OUT=STRPMEAC
+         54        BLOCK STRIPPER IN=STRPMEAH TOP-LQU BOT-VAP OUT=TOP-VAP  &
+         55            BOT-LQU
+         56        BLOCK COND IN=TOP-VAP OUT=CO2-OUT TOP-LQU
+         57        BLOCK MIXER IN=ABSMEAC MAKEUP WATMIX OUT=LEANMEAH
+         58        BLOCK COOLER IN=LEANMEAH OUT=LEAMEAC
+         59        BLOCK HX IN=ABSMEA STRPMEAC OUT=ABSMEAC STRPMEAH
+         60        BLOCK SPLIT IN=WATSPLIT OUT=WATMIX WATOUT
+         61        BLOCK REBOILER IN=BOT-LQU OUT=BOT-VAP ABSMEA
+         62
+         63    PROPERTIES ELECNRTL HENRY-COMPS=GLOBAL CHEMISTRY=MEA  &
+         64            TRUE-COMPS=YES
+         65
+         66    PROP-REPLACE ELECNRTL ELECNRTL
+         67        MODEL VAQCLK 1 1
+         68        MODEL MUL2JONS 1 1 1 2
+         69        MODEL DL1NST 1 1
+         70        MODEL SIG2ONSG 1 -9 1
+         71        MODEL DL0NST 1 1
+         72
+         73    PROP-DATA DHAQFM
+         74        IN-UNITS SI SHORT-LENGTH=mm
+         75        PROP-LIST DHAQFM / DGAQFM
+         76        PVAL MEAH+ -3.3371074E+8 / -1.9013044E+8
+         77        PVAL MEACOO- -6.9846867E+8 / -4.9344343E+8
+         78
+         79    PROP-DATA REVIEW-1
+         80        IN-UNITS SI SHORT-LENGTH=mm
+         81        PROP-LIST IONRDL
+         82        PVAL MEAH+ 0
+         83        PVAL MEACOO- 0
+         84
+         85    PROP-DATA CPAQ0-1
+         86        IN-UNITS SI
+         87        PROP-LIST CPAQ0
+         88        PVAL MEAH+ 1.60126959E+5
+         89        PVAL MEACOO- -.1751245940
+         90        PVAL HCO3- -29260
+         91        PVAL CO3-2 -397100
+         92
+         93    PROP-DATA IONMOB-1
+         94        IN-UNITS SI SHORT-LENGTH=mm
+         95        PROP-LIST IONMOB
+         96        PVAL MEAH+ 5 0
+         97        PVAL MEACOO- 5 0
+         98
+         99    PROP-DATA IONMUB-1
+        100        IN-UNITS SI SHORT-LENGTH=mm
+        101        PROP-LIST IONMUB
+        102        PVAL CO3-2 .5641176540
+        103        PVAL HCO3- .09469440180
+        104        PVAL MEAH+ .2995182540 0.0
+        105        PVAL MEACOO- .2010385470 0.0
+        106
+        107    PROP-DATA VLBROC-1
+        108        IN-UNITS SI SHORT-LENGTH=mm
+        109        PROP-LIST VLBROC
+        110        PVAL CO2 .04264657490 -.00024519450
+        111
+        112    PROP-DATA HOCETA-1
+        113        IN-UNITS SI SHORT-LENGTH=mm
+        114        PROP-LIST HOCETA
+        115        BPVAL H2O H2O 1.70
+        116        BPVAL H2O CO2 .30
+        117        BPVAL CO2 H2O .30
+        118        BPVAL CO2 CO2 .160
+        119
+        120    PROP-DATA VLQKIJ-1
+        121        IN-UNITS SI SHORT-LENGTH=mm
+        122        PROP-LIST VLQKIJ
+        123        BPVAL H2O MEA -.0711319026
+        124        BPVAL MEA H2O -.0711319026
+        125
+        126    PROP-DATA HENRY-1
+        127        IN-UNITS SI SHORT-LENGTH=mm
+        128        PROP-LIST HENRY
+        129        BPVAL CO2 H2O -145.3161340 765.8882280 32.24727040  &
+        130            -.0739507133 0.0 2000.0 0.0
+        131        BPVAL CO2 MEA 20.175859960 -1138.50 0.0 0.0 0.0 2000.0  &
+        132            0.0
+        133        BPVAL N2 H2O 176.5070 -8432.770 -21.5580 -.008436240 273.0  &
+        134            346.0 0.0
+        135        BPVAL O2 H2O 155.9210000 -7775.060000 -18.39740000  &
+        136            -9.4435400E-3 274.0000000 348.0000000 0.0
+        137
+        138    PROP-DATA MUKIJ-1
+        139        IN-UNITS SI SHORT-LENGTH=mm
+        140        PROP-LIST MUKIJ
+        141        BPVAL MEA H2O .7041107980 0.0 0.0 0.0 0.0 298.150
+        142        BPVAL H2O MEA .7041107980 0.0 0.0 0.0 0.0 298.150
+        143
+        144    PROP-DATA MULIJ-1
+        145        IN-UNITS SI SHORT-LENGTH=mm
+        146        PROP-LIST MULIJ
+        147        BPVAL MEA H2O -1.741797970 0.0 0.0 0.0 0.0 298.150
+        148        BPVAL H2O MEA 1.741797970 0.0 0.0 0.0 0.0 298.150
+        149
+        150    PROP-DATA NRTL-1
+        151        IN-UNITS SI SHORT-LENGTH=mm
+        152        PROP-LIST NRTL
+        153        BPVAL MEA H2O 1.438498000 99.02104000 .2000000000 0.0 0.0  &
+        154            0.0 298.1500000 423.1500000
+        155        BPVAL H2O MEA -1.046602000 -337.5456000 .2000000000 0.0  &
+        156            0.0 0.0 298.1500000 423.1500000
+        157        BPVAL H2O CO2 0.0 0.0 .20 0.0 0.0 0.0 0.0 1000.0
+        158        BPVAL CO2 H2O 0.0 0.0 .20 0.0 0.0 0.0 0.0 1000.0
+        159
+        160    PROP-DATA VLCLK-1
+        161        IN-UNITS SI SHORT-LENGTH=mm
+        162        PROP-LIST VLCLK
+        163        BPVAL MEAH+ HCO3- .06528374280 0.0
+        164        BPVAL MEAH+ MEACOO- .1225642980 0.0
+        165        BPVAL MEAH+ CO3-2 -.02877240020 0.0
+        166        BPVAL MEAH+ OH- 0.0 0.0
+        167
+        168    PROP-DATA GMELCC-1
+        169        IN-UNITS SI SHORT-LENGTH=mm
+        170        PROP-LIST GMELCC
+        171        PPVAL MEA ( H3O+ OH- ) 8.0
+        172        PPVAL ( H3O+ OH- ) MEA -4.0
+        173        PPVAL MEA ( H3O+ HCO3- ) 8.0
+        174        PPVAL ( H3O+ HCO3- ) MEA -4.0
+        175        PPVAL MEA ( H3O+ CO3-2 ) 8.0
+        176        PPVAL ( H3O+ CO3-2 ) MEA -4.0
+        177        PPVAL MEA ( H3O+ MEACOO- ) 8.0
+        178        PPVAL ( H3O+ MEACOO- ) MEA -4.0
+        179        PPVAL MEA ( MEAH+ OH- ) 8.0
+        180        PPVAL ( MEAH+ OH- ) MEA -4.0
+        181        PPVAL MEA ( MEAH+ HCO3- ) 8.0
+        182        PPVAL ( MEAH+ HCO3- ) MEA -4.0
+        183        PPVAL MEA ( MEAH+ CO3-2 ) 8.0
+        184        PPVAL ( MEAH+ CO3-2 ) MEA -4.0
+        185        PPVAL MEA ( MEAH+ MEACOO- ) 8.0
+        186        PPVAL ( MEAH+ MEACOO- ) MEA -4.0
+        187        PPVAL H2O ( H3O+ OH- ) 8.0
+        188        PPVAL ( H3O+ OH- ) H2O -4.0
+        189        PPVAL H2O ( H3O+ HCO3- ) 8.0
+        190        PPVAL ( H3O+ HCO3- ) H2O -4.0
+        191        PPVAL H2O ( H3O+ CO3-2 ) 8.0
+        192        PPVAL ( H3O+ CO3-2 ) H2O -4.0
+        193        PPVAL H2O ( MEAH+ HCO3- ) 1.469406150
+        194        PPVAL ( MEAH+ HCO3- ) H2O -1.402090970
+        195        PPVAL H2O ( MEAH+ MEACOO- ) 7.387094060
+        196        PPVAL ( MEAH+ MEACOO- ) H2O -3.253917800
+        197        PPVAL CO2 ( H3O+ OH- ) 8.0
+        198        PPVAL ( H3O+ OH- ) CO2 -4.0
+        199        PPVAL CO2 ( H3O+ HCO3- ) 8.0
+        200        PPVAL ( H3O+ HCO3- ) CO2 -4.0
+        201        PPVAL CO2 ( H3O+ CO3-2 ) 8.0
+        202        PPVAL ( H3O+ CO3-2 ) CO2 -4.0
+        203        PPVAL CO2 ( H3O+ MEACOO- ) 8.0
+        204        PPVAL ( H3O+ MEACOO- ) CO2 -4.0
+        205        PPVAL CO2 ( MEAH+ OH- ) 8.0
+        206        PPVAL ( MEAH+ OH- ) CO2 -4.0
+        207        PPVAL CO2 ( MEAH+ HCO3- ) 8.0
+        208        PPVAL ( MEAH+ HCO3- ) CO2 -4.0
+        209        PPVAL CO2 ( MEAH+ CO3-2 ) 8.0
+        210        PPVAL ( MEAH+ CO3-2 ) CO2 -4.0
+        211        PPVAL CO2 ( MEAH+ MEACOO- ) 8.0
+        212        PPVAL ( MEAH+ MEACOO- ) CO2 -4.0
+        213        PPVAL H2O ( MEAH+ CO3-2 ) 8.0
+        214        PPVAL ( MEAH+ CO3-2 ) H2O -4.0
+        215        PPVAL H2O ( H3O+ MEACOO- ) 8.0
+        216        PPVAL ( H3O+ MEACOO- ) H2O -4.0
+        217        PPVAL H2O ( MEAH+ OH- ) 8.0
+        218        PPVAL ( MEAH+ OH- ) H2O -4.0
+        219
+        220    PROP-DATA GMELCD-1
+        221        IN-UNITS SI SHORT-LENGTH=mm
+        222        PROP-LIST GMELCD
+        223        PPVAL MEA ( H3O+ OH- ) 0.0
+        224        PPVAL ( H3O+ OH- ) MEA 0.0
+        225        PPVAL MEA ( H3O+ HCO3- ) 0.0
+        226        PPVAL ( H3O+ HCO3- ) MEA 0.0
+        227        PPVAL MEA ( H3O+ CO3-2 ) 0.0
+        228        PPVAL ( H3O+ CO3-2 ) MEA 0.0
+        229        PPVAL MEA ( H3O+ MEACOO- ) 0.0
+        230        PPVAL ( H3O+ MEACOO- ) MEA 0.0
+        231        PPVAL MEA ( MEAH+ OH- ) 0.0
+        232        PPVAL ( MEAH+ OH- ) MEA 0.0
+        233        PPVAL MEA ( MEAH+ HCO3- ) 0.0
+        234        PPVAL ( MEAH+ HCO3- ) MEA 0.0
+        235        PPVAL MEA ( MEAH+ CO3-2 ) 0.0
+        236        PPVAL ( MEAH+ CO3-2 ) MEA 0.0
+        237        PPVAL MEA ( MEAH+ MEACOO- ) 0.0
+        238        PPVAL ( MEAH+ MEACOO- ) MEA 0.0
+        239        PPVAL H2O ( H3O+ OH- ) 0.0
+        240        PPVAL ( H3O+ OH- ) H2O 0.0
+        241        PPVAL H2O ( H3O+ HCO3- ) 0.0
+        242        PPVAL ( H3O+ HCO3- ) H2O 0.0
+        243        PPVAL H2O ( H3O+ CO3-2 ) 0.0
+        244        PPVAL ( H3O+ CO3-2 ) H2O 0.0
+        245        PPVAL H2O ( MEAH+ HCO3- ) 0.0
+        246        PPVAL ( MEAH+ HCO3- ) H2O 0.0
+        247        PPVAL H2O ( MEAH+ MEACOO- ) 0.0
+        248        PPVAL ( MEAH+ MEACOO- ) H2O 0.0
+        249        PPVAL CO2 ( H3O+ OH- ) 0.0
+        250        PPVAL ( H3O+ OH- ) CO2 0.0
+        251        PPVAL CO2 ( H3O+ HCO3- ) 0.0
+        252        PPVAL ( H3O+ HCO3- ) CO2 0.0
+        253        PPVAL CO2 ( H3O+ CO3-2 ) 0.0
+        254        PPVAL ( H3O+ CO3-2 ) CO2 0.0
+        255        PPVAL CO2 ( H3O+ MEACOO- ) 0.0
+        256        PPVAL ( H3O+ MEACOO- ) CO2 0.0
+        257        PPVAL CO2 ( MEAH+ OH- ) 0.0
+        258        PPVAL ( MEAH+ OH- ) CO2 0.0
+        259        PPVAL CO2 ( MEAH+ HCO3- ) 0.0
+        260        PPVAL ( MEAH+ HCO3- ) CO2 0.0
+        261        PPVAL CO2 ( MEAH+ CO3-2 ) 0.0
+        262        PPVAL ( MEAH+ CO3-2 ) CO2 0.0
+        263        PPVAL CO2 ( MEAH+ MEACOO- ) 0.0
+        264        PPVAL ( MEAH+ MEACOO- ) CO2 0.0
+        265        PPVAL H2O ( MEAH+ CO3-2 ) 0.0
+        266        PPVAL ( MEAH+ CO3-2 ) H2O 0.0
+        267        PPVAL H2O ( H3O+ MEACOO- ) 0.0
+        268        PPVAL ( H3O+ MEACOO- ) H2O 0.0
+        269        PPVAL H2O ( MEAH+ OH- ) 0.0
+        270        PPVAL ( MEAH+ OH- ) H2O 0.0
+        271
+        272    PROP-DATA GMELCE-1
+        273        IN-UNITS SI SHORT-LENGTH=mm
+        274        PROP-LIST GMELCE
+        275        PPVAL MEA ( H3O+ OH- ) 0.0
+        276        PPVAL ( H3O+ OH- ) MEA 0.0
+        277        PPVAL MEA ( H3O+ HCO3- ) 0.0
+        278        PPVAL ( H3O+ HCO3- ) MEA 0.0
+        279        PPVAL MEA ( H3O+ CO3-2 ) 0.0
+        280        PPVAL ( H3O+ CO3-2 ) MEA 0.0
+        281        PPVAL MEA ( H3O+ MEACOO- ) 0.0
+        282        PPVAL ( H3O+ MEACOO- ) MEA 0.0
+        283        PPVAL MEA ( MEAH+ OH- ) 0.0
+        284        PPVAL ( MEAH+ OH- ) MEA 0.0
+        285        PPVAL MEA ( MEAH+ HCO3- ) 0.0
+        286        PPVAL ( MEAH+ HCO3- ) MEA 0.0
+        287        PPVAL MEA ( MEAH+ CO3-2 ) 0.0
+        288        PPVAL ( MEAH+ CO3-2 ) MEA 0.0
+        289        PPVAL MEA ( MEAH+ MEACOO- ) 0.0
+        290        PPVAL ( MEAH+ MEACOO- ) MEA 0.0
+        291        PPVAL H2O ( H3O+ OH- ) 0.0
+        292        PPVAL ( H3O+ OH- ) H2O 0.0
+        293        PPVAL H2O ( H3O+ HCO3- ) 0.0
+        294        PPVAL ( H3O+ HCO3- ) H2O 0.0
+        295        PPVAL H2O ( H3O+ CO3-2 ) 0.0
+        296        PPVAL ( H3O+ CO3-2 ) H2O 0.0
+        297        PPVAL H2O ( MEAH+ HCO3- ) 0.0
+        298        PPVAL ( MEAH+ HCO3- ) H2O 0.0
+        299        PPVAL H2O ( MEAH+ MEACOO- ) 0.0
+        300        PPVAL ( MEAH+ MEACOO- ) H2O 0.0
+        301        PPVAL CO2 ( H3O+ OH- ) 0.0
+        302        PPVAL ( H3O+ OH- ) CO2 0.0
+        303        PPVAL CO2 ( H3O+ HCO3- ) 0.0
+        304        PPVAL ( H3O+ HCO3- ) CO2 0.0
+        305        PPVAL CO2 ( H3O+ CO3-2 ) 0.0
+        306        PPVAL ( H3O+ CO3-2 ) CO2 0.0
+        307        PPVAL CO2 ( H3O+ MEACOO- ) 0.0
+        308        PPVAL ( H3O+ MEACOO- ) CO2 0.0
+        309        PPVAL CO2 ( MEAH+ OH- ) 0.0
+        310        PPVAL ( MEAH+ OH- ) CO2 0.0
+        311        PPVAL CO2 ( MEAH+ HCO3- ) 0.0
+        312        PPVAL ( MEAH+ HCO3- ) CO2 0.0
+        313        PPVAL CO2 ( MEAH+ CO3-2 ) 0.0
+        314        PPVAL ( MEAH+ CO3-2 ) CO2 0.0
+        315        PPVAL CO2 ( MEAH+ MEACOO- ) 0.0
+        316        PPVAL ( MEAH+ MEACOO- ) CO2 0.0
+        317        PPVAL H2O ( MEAH+ CO3-2 ) 0.0
+        318        PPVAL ( MEAH+ CO3-2 ) H2O 0.0
+        319        PPVAL H2O ( H3O+ MEACOO- ) 0.0
+        320        PPVAL ( H3O+ MEACOO- ) H2O 0.0
+        321        PPVAL H2O ( MEAH+ OH- ) 0.0
+        322        PPVAL ( MEAH+ OH- ) H2O 0.0
+        323
+        324    PROP-DATA GMELCN-1
+        325        IN-UNITS SI SHORT-LENGTH=mm
+        326        PROP-LIST GMELCN
+        327        PPVAL MEA ( H3O+ OH- ) .20
+        328        PPVAL MEA ( H3O+ HCO3- ) .20
+        329        PPVAL MEA ( H3O+ CO3-2 ) .20
+        330        PPVAL MEA ( H3O+ MEACOO- ) .20
+        331        PPVAL MEA ( MEAH+ OH- ) .20
+        332        PPVAL MEA ( MEAH+ HCO3- ) .20
+        333        PPVAL MEA ( MEAH+ CO3-2 ) .20
+        334        PPVAL MEA ( MEAH+ MEACOO- ) .20
+        335        PPVAL CO2 ( H3O+ OH- ) .20
+        336        PPVAL CO2 ( H3O+ HCO3- ) .20
+        337        PPVAL CO2 ( H3O+ CO3-2 ) .20
+        338        PPVAL CO2 ( H3O+ MEACOO- ) .20
+        339        PPVAL CO2 ( MEAH+ OH- ) .20
+        340        PPVAL CO2 ( MEAH+ HCO3- ) .20
+        341        PPVAL CO2 ( MEAH+ CO3-2 ) .20
+        342        PPVAL CO2 ( MEAH+ MEACOO- ) .20
+        343        PPVAL H2O ( H3O+ OH- ) .20
+        344        PPVAL H2O ( H3O+ HCO3- ) .20
+        345        PPVAL H2O ( H3O+ CO3-2 ) .20
+        346        PPVAL H2O ( H3O+ MEACOO- ) .20
+        347        PPVAL H2O ( MEAH+ OH- ) .20
+        348        PPVAL H2O ( MEAH+ HCO3- ) .20
+        349        PPVAL H2O ( MEAH+ CO3-2 ) .20
+        350        PPVAL H2O ( MEAH+ MEACOO- ) .20
+        351
+        352    PROP-SET XAPP XAPP SUBSTREAM=MIXED COMPS=CO2 MEA PHASE=L
+        353
+        354    STREAM FLUEGAS
+        355        SUBSTREAM MIXED TEMP=48. <C> PRES=112. <kPa>  &
+        356            VOLUME-FLOW=4819.86 <cum/hr>
+        357        MOLE-FLOW H2O 0.1125 / CO2 0.1008 / N2 0.7486 / O2  &
+        358            0.0381
+        359
+        360    STREAM LEANMEA
+        361        SUBSTREAM MIXED TEMP=35. <C> PRES=112. <kPa>  &
+        362            MASS-FLOW=20260.11 <kg/hr>
+        363        MOLE-FRAC MEA 1. / H2O 7.16 / CO2 0.3059
+        364
+        365    STREAM MAKEUP
+        366        SUBSTREAM MIXED TEMP=35. <C> PRES=106. <kPa>
+        367        MASS-FLOW H2O 0.001 <kg/hr>
+        368
+        369    STREAM WASHWAT
+        370        SUBSTREAM MIXED TEMP=15. <C> PRES=112. <kPa>  &
+        371            MASS-FLOW=200. <kg/hr>
+        372        MASS-FRAC H2O 1.
+        373
+        374    BLOCK MIXER MIXER
+        375        PARAM
+        376
+        377    BLOCK SPLIT FSPLIT
+        378        MASS-FLOW WATOUT 83.1 <kg/hr>
+        379
+        380    BLOCK COOLER HEATER
+        381        PARAM TEMP=35. <C> PRES=0. <kPa> DPPARMOPT=NO
+        382
+        383    BLOCK COND FLASH2
+        384        PARAM TEMP=30. <C> PRES=200. <kPa>
+        385
+        386    BLOCK REBOILER FLASH2
+        387        PARAM TEMP=122. <C> DUTY=986.952837 <kW>
+        388
+        389    BLOCK HX HEATX
+        390        PARAM DELT-HOT=9.2 <C> CALC-TYPE=DESIGN MIN-TAPP=5.  &
+        391            U-OPTION=PHASE F-OPTION=CONSTANT CALC-METHOD=SHORTCUT
+        392        FEEDS HOT=ABSMEA COLD=STRPMEAC
+        393        OUTLETS-HOT ABSMEAC
+        394        OUTLETS-COLD STRPMEAH
+        395        FLASH-SPECS ABSMEAC NPHASE=2 FREE-WATER=NO MAXIT=250
+        396        FLASH-SPECS STRPMEAH NPHASE=2 FREE-WATER=NO MAXIT=250
+        397        HOT-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+        398        COLD-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+        399        TQ-PARAM CURVE=YES
+        400
+        401    BLOCK ABSORBER RADFRAC
+        402        SUBOBJECTS INTERNALS = P-1 P-2
+        403        PARAM NSTAGE=24 ALGORITHM=STANDARD MAXOL=35 P-UPDATE=YES  &
+        404            P-FIX=TOP DAMPING=NONE
+        405        PARAM2 STATIC-DP=NO OLD-SULZER=NO
+        406        COL-CONFIG CONDENSER=NONE REBOILER=NONE CA-CONFIG=OPT-R
+        407        RATESEP-ENAB CALC-MODE=RIG-RATE
+        408        RATESEP-PARA RBRXN=0.9 DISC-RATIO=10.
+        409        FEEDS FLUEGAS 24 ON-STAGE / LEANMEA 5 ON-STAGE /  &
+        410            WASHWAT 1 ON-STAGE
+        411        PRODUCTS FLUEOFF 1 V / RICHMEA 24 L / WATSPLIT 4 TL
+        412        P-SPEC 1 106. <kPa>
+        413        COL-SPECS DP-COL=6. <kPa>
+        414        REAC-STAGES 5 24 MEA-REA
+        415        INTERNALS P-1 STAGE1=1 STAGE2=4 INTERNAL=PACKING  &
+        416            SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+        417            LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+        418            VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+        419            MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 AREA-FACTOR=2.1  &
+        420            NLPOINTS=5 PACK-HT=4. THETA=45
+        421        PACK-RATE 1 1 4 MELLAPAK
+        422        PACK-RATE2 1
+        423        INTERNALS P-2 STAGE1=5 STAGE2=24 INTERNAL=PACKING  &
+        424            SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+        425            LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+        426            VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+        427            MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 HOLDUP-CORP=BRF-92  &
+        428            AREA-FACTOR=2. NLPOINTS=5 PACK-HT=20. THETA=45
+        429        PACK-RATE 2 5 24 MELLAPAK
+        430        PACK-RATE2 2
+        431
+        432    BLOCK STRIPPER RADFRAC
+        433        SUBOBJECTS INTERNALS = P-1 P-2
+        434        PARAM NSTAGE=18 ALGORITHM=STANDARD MAXOL=35 P-UPDATE=YES  &
+        435            P-FIX=TOP DAMPING=NONE
+        436        PARAM2 STATIC-DP=NO OLD-SULZER=NO
+        437        COL-CONFIG CONDENSER=NONE REBOILER=NONE CA-CONFIG=OPT-R
+        438        RATESEP-ENAB CALC-MODE=RIG-RATE
+        439        RATESEP-PARA RBRXN=0.9 DISC-RATIO=10.
+        440        FEEDS STRPMEAH 3 ON-STAGE / TOP-LQU 1 ON-STAGE /  &
+        441            BOT-VAP 18 ON-STAGE
+        442        PRODUCTS TOP-VAP 1 V / BOT-LQU 18 L
+        443        P-SPEC 1 200. <kPa>
+        444        COL-SPECS DP-COL=6. <kPa>
+        445        REAC-STAGES 3 18 MEA-REA
+        446        INTERNALS P-1 STAGE1=1 STAGE2=2 INTERNAL=PACKING  &
+        447            SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+        448            LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+        449            VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+        450            MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 AREA-FACTOR=1.  &
+        451            NLPOINTS=5 PACK-HT=2. THETA=45
+        452        PACK-RATE 1 1 2 MELLAPAK
+        453        PACK-RATE2 1
+        454        INTERNALS P-2 STAGE1=3 STAGE2=18 INTERNAL=PACKING  &
+        455            SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+        456            LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+        457            VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+        458            MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 HOLDUP-CORP=BRF-92  &
+        459            NLPOINTS=5 PACK-HT=16. THETA=45
+        460        PACK-RATE 2 3 18 MELLAPAK
+        461        PACK-RATE2 2
+        462
+        463    BLOCK PUMP PUMP
+        464        PARAM PRES=200. <kPa>
+        465
+        466    DESIGN-SPEC DS-1
+        467        DEFINE CO2FLOW MASS-FLOW STREAM=CO2-OUT SUBSTREAM=MIXED  &
+        468            COMPONENT=CO2 UOM="kg/hr"
+        469        SPEC "CO2FLOW" TO "864.35"
+        470        TOL-SPEC "0.5"
+        471        VARY BLOCK-VAR BLOCK=REBOILER VARIABLE=DUTY SENTENCE=PARAM  &
+        472            UOM="kW"
+        473        LIMITS "700" "1500"
+        474
+        475    EO-CONV-OPTI
+        476
+        477    CONV-OPTIONS
+        478        PARAM TEAR-METHOD=BROYDEN
+        479
+        480    STREAM-REPOR MOLEFLOW MOLEFRAC PROPERTIES=XAPP
+        481
+        482    PROPERTY-REP NOPCES PROP-DATA DFMS NOPARAM-PLUS
+        483
+        484    REACTIONS MEA-REA REAC-DIST
+        485        REAC-DATA 1
+        486        REAC-DATA 2
+        487        REAC-DATA 3
+        488        REAC-DATA 4 KINETIC
+        489        REAC-DATA 5 KINETIC
+        490        REAC-DATA 6 KINETIC
+        491        REAC-DATA 7 KINETIC
+        492        RATE-CON 4 PRE-EXP=4.32E+013 ACT-ENERGY=13249. <cal/mol>
+        493        RATE-CON 5 PRE-EXP=2.38E+017 ACT-ENERGY=29451. <cal/mol>
+        494        RATE-CON 6 PRE-EXP=97700000000. ACT-ENERGY=9855.8 <cal/mol>
+        495        RATE-CON 7 PRE-EXP=3.23E+019 ACT-ENERGY=15655. <cal/mol>
+        496        STOIC 1 MEAH+ -1. / H2O -1. / MEA 1. / H3O+ 1.
+        497        STOIC 2 H2O -2. / H3O+ 1. / OH- 1.
+        498        STOIC 3 HCO3- -1. / H2O -1. / CO3-2 1. / H3O+ 1.
+        499        STOIC 4 CO2 -1. / OH- -1. / HCO3- 1.
+        500        STOIC 5 HCO3- -1. / CO2 1. / OH- 1.
+        501        STOIC 6 MEA -1. / CO2 -1. / H2O -1. / MEACOO- 1. /  &
+        502            H3O+ 1.
+        503        STOIC 7 MEACOO- -1. / H3O+ -1. / MEA 1. / CO2 1. /  &
+        504            H2O 1.
+        505        POWLAW-EXP 4 CO2 1. / OH- 1.
+        506        POWLAW-EXP 5 HCO3- 1.
+        507        POWLAW-EXP 6 MEA 1. / CO2 1. / H2O 0.
+        508        POWLAW-EXP 7 MEACOO- 1. / H3O+ 1.
+        509    ;
+        510    ;
+        511    ;
+        512    ;
+        513    ;
+ *** INPUT TRANSLATOR MESSAGES ***
+
+  *** THIS RUN USES THE PROPERTIES ENTERPRISE DATABASE ***
+      SQLLOCALDB.APESV140 : (DATAVERSION - 40.0.0.13)                         
+      SQLLOCALDB.APV140 : (DATAVERSION - 40.0.0.13)                           
+      SQLLOCALDB.FACTV140 : (DATAVERSION - 40.0.0.12)                         
+      SQLLOCALDB.NISTV140 : (DATAVERSION - 40.0.0.12)                         
+
+      INFORMATION                                              (PSTOP1AP.1)     
+      THERE ARE HENRY COMPONENTS DEFINED IN THIS CASE, THE BINARY DATABANK      
+      WILL BE SEARCHED AUTOMATICALLY FOR ANY AVAILABLE HENRY CONSTANTS.         
+
+      INFORMATION IN PHYSICAL PROPERTY SYSTEM                  (STELBP.3)       
+      THE PAIR PARAMETERS FOR ELECNRTL OPTION SET HAS BEEN RETRIEVED FROM       
+      DATABANK ENRTL-RK.                                                        
+
+      INFORMATION                                              (GTDATA.4)       
+      PURE COMPONENT PARAMETERS FOR SOME COMPONENTS ARE RETRIEVED FROM          
+      DATABANK ELECPURE. THESE PARAMETERS ARE USED WITH ELECNRTL METHOD.        
+      UNLESS YOU ENTER YOUR OWN PARAMETERS IN PROP-DATA PARAGRAPHS.             
+      PARAMETER RKTZRA RETRIEVED FOR COMPONENT MEA                              
+      PARAMETER DHFORM RETRIEVED FOR COMPONENT MEA                              
+      PARAMETER PLXANT RETRIEVED FOR COMPONENT H2O                              
+      PARAMETER THRSWT(ELEMENT/3) RETRIEVED FOR COMPONENT MEA                   
+      PARAMETER THRSWT(ELEMENT/3) RETRIEVED FOR COMPONENT H2O                   
+      PARAMETER PLXANT RETRIEVED FOR COMPONENT MEA                              
+      PARAMETER CPDIEC RETRIEVED FOR COMPONENT MEA                              
+
+  *   WARNING IN THE "STREAM" PARAGRAPH WHICH BEGINS ON LINE 360                
+      STREAM NAME: LEANMEA                                     (SDSMPR.11)      
+      COMPONENT MOLE FRACTIONS ARE NORMALIZED TO UNITY.                         
+ 
+ DESIGN SPEC: DS-1 WILL BE INTERPRETED 
+ 
+
+ PDF updated                                                                      TIME =      2.09
+
+ *** CALCULATION TRACE ***
+
+
+ *** FLOWSHEET ANALYSIS MESSAGES ***
+
+ FLOWSHEET CONNECTIVITY BY STREAMS       
+
+   STREAM     SOURCE     DEST           STREAM     SOURCE     DEST
+   WASHWAT    ----       ABSORBER       LEANMEA    ----       ABSORBER
+   FLUEGAS    ----       ABSORBER       MAKEUP     ----       MIXER   
+   FLUEOFF    ABSORBER   ----           RICHMEA    ABSORBER   PUMP    
+   WATSPLIT   ABSORBER   SPLIT          STRPMEAC   PUMP       HX      
+   TOP-VAP    STRIPPER   COND           BOT-LQU    STRIPPER   REBOILER
+   CO2-OUT    COND       ----           TOP-LQU    COND       STRIPPER
+   LEANMEAH   MIXER      COOLER         LEAMEAC    COOLER     ----    
+   ABSMEAC    HX         MIXER          STRPMEAH   HX         STRIPPER
+   WATMIX     SPLIT      MIXER          WATOUT     SPLIT      ----    
+   BOT-VAP    REBOILER   STRIPPER       ABSMEA     REBOILER   HX      
+
+ FLOWSHEET CONNECTIVITY BY BLOCKS        
+
+   BLOCK        INLETS                         OUTLETS
+   ABSORBER     FLUEGAS LEANMEA WASHWAT        FLUEOFF RICHMEA WATSPLIT    
+   PUMP         RICHMEA                        STRPMEAC                    
+   STRIPPER     STRPMEAH TOP-LQU BOT-VAP       TOP-VAP BOT-LQU             
+   COND         TOP-VAP                        CO2-OUT TOP-LQU             
+   MIXER        ABSMEAC MAKEUP WATMIX          LEANMEAH                    
+   COOLER       LEANMEAH                       LEAMEAC                     
+   HX           ABSMEA STRPMEAC                ABSMEAC STRPMEAH            
+   SPLIT        WATSPLIT                       WATMIX WATOUT               
+   REBOILER     BOT-LQU                        BOT-VAP ABSMEA              
+
+      BLOCK $OLVER01 (METHOD: BROYDEN ) HAS BEEN DEFINED TO CONVERGE
+               STREAMS: BOT-LQU   TOP-LQU
+
+      BLOCK $OLVER02 (METHOD: SECANT  ) HAS BEEN DEFINED TO CONVERGE
+                SPECS : DS-1
+
+      INFORMATION DURING FLOWSHEET ANALYSIS                    (AFLSPC.24)      
+      Convergence loop $OLVER02 extended to cover                               
+      tear TOP-LQU from COND to STRIPPER                                        
+
+      COMPUTATION ORDER FOR THE FLOWSHEET IS:
+      ABSORBER PUMP 
+      $OLVER02 
+      |  $OLVER01 REBOILER HX STRIPPER COND 
+      |  (RETURN $OLVER01) 
+      (RETURN $OLVER02) 
+      SPLIT MIXER COOLER 
+
+Calculations begin                                                              time      0.27
+
+
+ SIMULATION CALCULATIONS BEGIN                                                    TIME =      0.27
+
+      ENTHALPY CALCULATION FOR INLET STREAM FLUEGAS OF BLOCK ABSORBER             TIME =      0.27
+      KODE = 2  NTRIAL =   3  T =  321.150      P =  112000.      V = 0.986952      Q =  0.00000    
+
+      ENTHALPY CALCULATION FOR INLET STREAM LEANMEA OF BLOCK ABSORBER             TIME =      0.27
+      KODE = 2  NTRIAL =   3  T =  308.150      P =  112000.      V =  0.00000      Q =  0.00000    
+
+      ENTHALPY CALCULATION FOR INLET STREAM WASHWAT OF BLOCK ABSORBER             TIME =      0.27
+      KODE = 2  NTRIAL =   2  T =  288.150      P =  112000.      V =  0.00000      Q =  0.00000    
+
+      UOS BLOCK ABSORBER MODEL: RADFRAC                                           TIME =      0.27
+
+       Convergence iterations:
+         OL   ML   IL     Err/Tol
+          1    1    4      468.16    
+          2    1    4      155.46    
+          3    1    4      122.80    
+          4    1    4      47.254    
+          5    1    4      17.933    
+          6    1    4      21.389    
+          7    1    3      14.101    
+          8    1    4      9.8970    
+          9    1    4      10.380    
+         10    1    2      5.2233    
+         11    1    3      1.7964    
+         12    1    3      1.4845    
+         13    1    2     0.83279    
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: ABSORBER
+           Iter     Err/Tol
+              0      376.40    
+              1      94.300    
+              2      5.0806    
+              3     0.28588    
+              4     0.75513E-02
+
+      UOS BLOCK PUMP     MODEL: PUMP                                              TIME =      1.74
+      VOL-FLOW   =  0.5229E-02 , DELTA P    =  0.9141E+05 , PUMP EFF   =  0.5107    
+      FLUID PWR  =   477.9     , BRAKE PWR  =   935.9     , ELEC PWR   =   935.9    
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =      1.74
+     SPECS: DS-1
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =      1.74
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =      1.74
+
+  *   WARNING WHILE EXECUTING UNIT OPERATIONS BLOCK: "REBOILER" (MODEL:         
+      "FLASH2")                                                (UFL01I.1)       
+      ZERO FEED TO THE BLOCK.  BLOCK BYPASSED                                   
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =      1.74
+
+  *   WARNING WHILE EXECUTING UNIT OPERATIONS BLOCK: "HX" (MODEL: "HEATX")      
+                                                               (UHE02I.1)       
+      AT LEAST ONE FEED HAS ZERO FLOW                                           
+      BLOCK BYPASSED                                                            
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =      1.74
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (UDL03A.7640)    
+      A LIQUID FEED/PUMPAROUND TO THE TOP STAGE IS REQUIRED WHEN                
+      "Q1=0" IS SPECIFIED IN "COL-SPECS"; REQUIRED FEED/PUMPAROUND              
+      HAS ZERO FLOW.                                                            
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (UDL03A.7660)    
+      A VAPOR FEED/PUMPAROUND TO THE BOTTOM STAGE IS REQUIRED WHEN              
+      "QN=0" IS SPECIFIED IN "COL-SPECS"; REQUIRED FEED/PUMPAROUND              
+      HAS ZERO FLOW.                                                            
+
+  *   WARNING WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:         
+      "RADFRAC")                                               (UDL3II.7200)    
+      REST OF BLOCK BYPASSED DUE TO SEVERE ERROR.                               
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =      1.74
+
+  *   WARNING WHILE EXECUTING UNIT OPERATIONS BLOCK: "COND" (MODEL: "FLASH2")   
+                                                               (UFL01I.1)       
+      ZERO FEED TO THE BLOCK.  BLOCK BYPASSED                                   
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =      1.74
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  12 VARS NOT CONVERGED, MAX ERR/TOL     0.10000E+07    TIME =      1.75
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =      1.75
+      KODE = 4  NTRIAL =   6  T =  395.150      P =  794434.      V =  0.00000      Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =      1.75
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.79443E+06   TOUT=  336.66  POUT=0.79443E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.72  POUT=0.20000E+06
+                              DUTY=0.10858E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =      1.92
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (UDL03A.7640)    
+      A LIQUID FEED/PUMPAROUND TO THE TOP STAGE IS REQUIRED WHEN                
+      "Q1=0" IS SPECIFIED IN "COL-SPECS"; REQUIRED FEED/PUMPAROUND              
+      HAS ZERO FLOW.                                                            
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (UDL03A.7660)    
+      A VAPOR FEED/PUMPAROUND TO THE BOTTOM STAGE IS REQUIRED WHEN              
+      "QN=0" IS SPECIFIED IN "COL-SPECS"; REQUIRED FEED/PUMPAROUND              
+      HAS ZERO FLOW.                                                            
+
+  *   WARNING WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:         
+      "RADFRAC")                                               (UDL3II.7200)    
+      REST OF BLOCK BYPASSED DUE TO SEVERE ERROR.                               
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =      1.94
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.422446      Q = -63419.5    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =      1.94
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  22 VARS NOT CONVERGED, MAX ERR/TOL     0.10000E+07    TIME =      1.94
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =      1.94
+      H-LOOP : NTRIAL =   6 IFLAG = 1 VAR = 6.376482E-02
+      KODE = 4  NTRIAL =   2  T =  395.150      P =  232091.      V = 6.376482E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =      1.95
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.23209E+06   TOUT=  336.66  POUT=0.23209E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  378.05  POUT=0.20000E+06
+                              DUTY=0.10215E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =      1.96
+
+  *   WARNING WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:         
+      "RADFRAC")                                               (VFLASH.1)       
+      REACTIVE FLASH FAILURE   INSIDE LOOP RMSERR = 3.8085-02 OUTSIDE LOOP      
+      RMSERR =    4.2996D-05                                                    
+
+       Convergence iterations:
+         OL   ML   IL     Err/Tol
+          1    1    4      475.36    
+          2    1    2      265.50    
+          3    1    2      76.812    
+          4    1    2      57.864    
+          5    1    2      28.317    
+          6    1    2      10.448    
+          7    1    2      2.9580    
+          8    1    2     0.78137    
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      21030.    
+              1      9379.7    
+              2      80.670    
+              3     0.11676E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =      4.81
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.517468      Q = -243786.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =      4.81
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  17 VARS NOT CONVERGED, MAX ERR/TOL      28160.        TIME =      4.81
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =      4.82
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 7.372215E-02
+      KODE = 4  NTRIAL =   2  T =  395.150      P =  213118.      V = 7.372215E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =      4.82
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.21312E+06   TOUT=  336.66  POUT=0.21312E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  378.90  POUT=0.20000E+06
+                              DUTY=0.10535E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =      4.85
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      72.237    
+              1      62.102    
+              2      53.190    
+              3      44.907    
+              4      36.571    
+              5      27.217    
+              6      15.392    
+              7      1.6604    
+              8     0.27972E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =      7.19
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.525780      Q = -245452.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =      7.19
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  15 VARS NOT CONVERGED, MAX ERR/TOL     -3496.9        TIME =      7.19
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =      7.19
+      KODE = 4  NTRIAL =   8  T =  395.150      P =  204568.      V = 8.167838E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =      7.19
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20457E+06   TOUT=  336.66  POUT=0.20457E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  380.03  POUT=0.20000E+06
+                              DUTY=0.10988E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =      7.19
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      38.898    
+              1      355.40    
+              2      2.9543    
+              3     0.55363E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =      8.30
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.503301      Q = -290202.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =      8.30
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:  15 VARS NOT CONVERGED, MAX ERR/TOL      6744.7        TIME =      8.30
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =      8.30
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  203446.      V = 8.393036E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =      8.30
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20345E+06   TOUT=  336.66  POUT=0.20345E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.72  POUT=0.20000E+06
+                              DUTY=0.10860E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =      8.31
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      12.806    
+              1      1.8200    
+              2     0.12631E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =      9.27
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.513189      Q = -279220.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =      9.27
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:  15 VARS NOT CONVERGED, MAX ERR/TOL     -898.67        TIME =      9.27
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =      9.27
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  202545.      V = 8.492209E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =      9.27
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20255E+06   TOUT=  336.66  POUT=0.20255E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.84  POUT=0.20000E+06
+                              DUTY=0.10907E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =      9.27
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      4.7452    
+              1      6.0989    
+              2     0.81945E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     10.19
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511142      Q = -284004.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     10.19
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:  15 VARS NOT CONVERGED, MAX ERR/TOL     -336.92        TIME =     10.19
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     10.19
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  201937.      V = 8.555246E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     10.19
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20194E+06   TOUT=  336.66  POUT=0.20194E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.92  POUT=0.20000E+06
+                              DUTY=0.10941E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     10.20
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      3.1682    
+              1      2.8696    
+              2     0.16194E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     11.01
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509712      Q = -287253.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     11.01
+      ITER   8 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    8:  15 VARS NOT CONVERGED, MAX ERR/TOL     -53.363        TIME =     11.01
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     11.01
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201799.      V = 8.568416E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     11.01
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20180E+06   TOUT=  336.66  POUT=0.20180E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10950E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     11.01
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.70979    
+              1     0.15541    
+              2     0.44860E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     12.30
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509337      Q = -288046.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     12.30
+      ITER   9 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    9:   3 VARS NOT CONVERGED, MAX ERR/TOL      3.8255        TIME =     12.30
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     12.30
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  201799.      V = 8.569761E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     12.30
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20180E+06   TOUT=  336.66  POUT=0.20180E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10950E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     12.30
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.81978E-01
+              1     0.19561E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     12.87
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509343      Q = -288076.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     12.87
+      ITER  10 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   10:   9 VARS NOT CONVERGED, MAX ERR/TOL     -2.6837        TIME =     12.87
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     12.87
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201800.      V = 8.567353E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     12.87
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20180E+06   TOUT=  336.66  POUT=0.20180E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10950E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     12.88
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.10547    
+              1     0.72913E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     13.38
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509335      Q = -288025.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     13.38
+      ITER  11 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   11:   6 VARS NOT CONVERGED, MAX ERR/TOL      2.7753        TIME =     13.39
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     13.39
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201801.      V = 8.567287E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     13.39
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20180E+06   TOUT=  336.66  POUT=0.20180E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10950E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     13.39
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.67200E-01
+              1     0.60105E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     14.18
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509335      Q = -288023.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     14.18
+      ITER  12 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   12:   9 VARS NOT CONVERGED, MAX ERR/TOL      2.6518        TIME =     14.18
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     14.18
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201802.      V = 8.567201E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     14.18
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20180E+06   TOUT=  336.66  POUT=0.20180E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10950E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     14.18
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.67273E-01
+              1     0.68037E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     14.90
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509335      Q = -288022.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     14.91
+      ITER  13 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   13:   3 VARS NOT CONVERGED, MAX ERR/TOL      2.2069        TIME =     14.91
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     14.91
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201803.      V = 8.567082E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     14.91
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20180E+06   TOUT=  336.66  POUT=0.20180E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10950E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     14.91
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.67398E-01
+              1     0.10735E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     15.49
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509334      Q = -288020.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     15.49
+      ITER  14 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   14:   3 VARS NOT CONVERGED, MAX ERR/TOL      1.5437        TIME =     15.49
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     15.49
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201804.      V = 8.566943E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     15.49
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20180E+06   TOUT=  336.66  POUT=0.20180E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10950E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     15.49
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.67488E-01
+              1     0.11344E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     16.10
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509333      Q = -288018.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     16.10
+      ITER  15 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   15:     *** CONVERGED *** , MAX ERR/TOL     0.73826        TIME =     16.10
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     16.10
+      ITER   0 For Specs:        DS-1
+      SPEC   1 ERROR =   83.697     OLD X =  0.98695E+06 NEW X =  0.99495E+06
+
+  LOOP $OLVER02 ITER    1:   1 VARS NOT CONVERGED, MAX ERR/TOL      167.39        TIME =     16.10
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     16.10
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     16.10
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201743.      V = 8.644741E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     16.10
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20174E+06   TOUT=  336.66  POUT=0.20174E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.92  POUT=0.20000E+06
+                              DUTY=0.10942E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     16.10
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.6487    
+              1     0.83614    
+              2     0.94195E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     17.21
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509490      Q = -289861.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     17.21
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  15 VARS NOT CONVERGED, MAX ERR/TOL     -151.37        TIME =     17.21
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     17.21
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  201623.      V = 8.658403E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     17.21
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20162E+06   TOUT=  336.66  POUT=0.20162E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.93  POUT=0.20000E+06
+                              DUTY=0.10948E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     17.22
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.71103    
+              1     0.10547    
+              2     0.37303E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     18.73
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509345      Q = -290337.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     18.73
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  14 VARS NOT CONVERGED, MAX ERR/TOL     -85.354        TIME =     18.73
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     18.73
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  201527.      V = 8.670503E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     18.74
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20153E+06   TOUT=  336.66  POUT=0.20153E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.94  POUT=0.20000E+06
+                              DUTY=0.10951E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     18.74
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.62070    
+              1     0.70208E-01
+              2     0.25925E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     19.70
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509271      Q = -290692.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     19.70
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  14 VARS NOT CONVERGED, MAX ERR/TOL     -32.883        TIME =     19.70
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     19.70
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  201468.      V = 8.675592E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     19.70
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20147E+06   TOUT=  336.66  POUT=0.20147E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.95  POUT=0.20000E+06
+                              DUTY=0.10954E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     19.71
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.32800    
+              1     0.21010E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     20.41
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509197      Q = -290889.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     20.41
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  12 VARS NOT CONVERGED, MAX ERR/TOL      5.1133        TIME =     20.41
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     20.41
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  201478.      V = 8.673460E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     20.41
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20148E+06   TOUT=  336.66  POUT=0.20148E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.95  POUT=0.20000E+06
+                              DUTY=0.10954E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     20.41
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.11347    
+              1     0.16227E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     20.83
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509213      Q = -290816.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     20.83
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:   8 VARS NOT CONVERGED, MAX ERR/TOL      1.8740        TIME =     20.83
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     20.83
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  201478.      V = 8.675741E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     20.84
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20148E+06   TOUT=  336.66  POUT=0.20148E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.95  POUT=0.20000E+06
+                              DUTY=0.10954E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     20.84
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.10339    
+              1     0.65907E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     21.47
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509216      Q = -290874.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     21.47
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:  11 VARS NOT CONVERGED, MAX ERR/TOL     -4.3583        TIME =     21.47
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     21.47
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  201479.      V = 8.673916E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     21.48
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20148E+06   TOUT=  336.66  POUT=0.20148E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.95  POUT=0.20000E+06
+                              DUTY=0.10954E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     21.48
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.91946E-01
+              1     0.38506E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     21.85
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509208      Q = -290838.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     21.85
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:     *** CONVERGED *** , MAX ERR/TOL     0.79165        TIME =     21.85
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     21.85
+      ITER   2 For Specs:        DS-1
+      SPEC   1 ERROR =   92.514     OLD X =  0.99495E+06 NEW X =  0.91101E+06
+
+  LOOP $OLVER02 ITER    2:   1 VARS NOT CONVERGED, MAX ERR/TOL      185.03        TIME =     21.85
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     21.86
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     21.86
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  202123.      V = 7.860328E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     21.86
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20212E+06   TOUT=  336.66  POUT=0.20212E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  380.14  POUT=0.20000E+06
+                              DUTY=0.11036E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     21.86
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      27.695    
+              1      89.955    
+              2     0.82675    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.2)       
+      FORTRAN OVERFLOW ENCOUNTERED.                                             
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *   WARNING WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:         
+      "RADFRAC")                                               (ZFLSH2.4)       
+      SALT LOOP IN CHEMISTRY "MEA" FAILED TO CONVERGE.                          
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+
+  *** SEVERE ERROR WHILE EXECUTING UNIT OPERATIONS BLOCK: "STRIPPER" (MODEL:    
+      "RADFRAC")                                               (FPEPRT.8)       
+      FORTRAN INVALID OPERATION ENCOUNTERED.                                    
+              3     0.62006    
+              4     0.17953E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     23.56
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.507849      Q = -271287.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     23.56
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  15 VARS NOT CONVERGED, MAX ERR/TOL      1729.1        TIME =     23.56
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     23.56
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  202659.      V = 7.798892E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     23.56
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20266E+06   TOUT=  336.66  POUT=0.20266E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  380.08  POUT=0.20000E+06
+                              DUTY=0.11010E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     23.56
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      3.0460    
+              1      1.7466    
+              2     0.62088E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     24.62
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.508680      Q = -268908.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     24.62
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  15 VARS NOT CONVERGED, MAX ERR/TOL      1273.9        TIME =     24.62
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     24.62
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  203462.      V = 7.715373E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     24.63
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20346E+06   TOUT=  336.66  POUT=0.20346E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  380.01  POUT=0.20000E+06
+                              DUTY=0.10982E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     24.63
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      4.5034    
+              1      2.7490    
+              2     0.13165E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     25.27
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.509072      Q = -266840.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     25.27
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  15 VARS NOT CONVERGED, MAX ERR/TOL      797.26        TIME =     25.27
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     25.27
+      KODE = 4  NTRIAL =   5  T =  395.150      P =  204545.      V = 7.605755E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     25.27
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20455E+06   TOUT=  336.66  POUT=0.20455E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.92  POUT=0.20000E+06
+                              DUTY=0.10940E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     25.28
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      5.5738    
+              1      4.9785    
+              2     0.42106E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     26.22
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510068      Q = -263519.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     26.22
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  15 VARS NOT CONVERGED, MAX ERR/TOL      315.92        TIME =     26.22
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     26.22
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205083.      V = 7.546982E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     26.23
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20508E+06   TOUT=  336.66  POUT=0.20508E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.88  POUT=0.20000E+06
+                              DUTY=0.10924E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     26.25
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.8319    
+              1      1.1081    
+              2     0.26007E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     27.49
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510294      Q = -262159.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     27.49
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:  14 VARS NOT CONVERGED, MAX ERR/TOL      102.94        TIME =     27.49
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     27.49
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205430.      V = 7.511570E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     27.50
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20543E+06   TOUT=  336.66  POUT=0.20543E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.85  POUT=0.20000E+06
+                              DUTY=0.10912E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     27.52
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      1.6903    
+              1     0.46631    
+              2     0.62211E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     28.61
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510620      Q = -261104.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     28.61
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:  14 VARS NOT CONVERGED, MAX ERR/TOL     -22.942        TIME =     28.61
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     28.61
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205332.      V = 7.521517E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     28.61
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20533E+06   TOUT=  336.66  POUT=0.20533E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.86  POUT=0.20000E+06
+                              DUTY=0.10916E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     28.62
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.47634    
+              1     0.36932E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     29.38
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510529      Q = -261400.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     29.38
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:  11 VARS NOT CONVERGED, MAX ERR/TOL      3.4766        TIME =     29.38
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     29.38
+      KODE = 4  NTRIAL =  12  T =  395.150      P =  205351.      V = 7.510332E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     29.38
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.66  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.86  POUT=0.20000E+06
+                              DUTY=0.10916E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     29.39
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.39081    
+              1     0.12251E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     29.79
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510509      Q = -261148.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     29.79
+      ITER   8 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    8:  13 VARS NOT CONVERGED, MAX ERR/TOL      20.168        TIME =     29.79
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     29.79
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205367.      V = 7.515701E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     29.79
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20537E+06   TOUT=  336.66  POUT=0.20537E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.85  POUT=0.20000E+06
+                              DUTY=0.10915E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     29.79
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.19847    
+              1     0.81476E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     30.18
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510535      Q = -261270.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     30.18
+      ITER   9 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    9:  11 VARS NOT CONVERGED, MAX ERR/TOL      5.1562        TIME =     30.18
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     30.18
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205361.      V = 7.516800E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     30.18
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20536E+06   TOUT=  336.66  POUT=0.20536E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.85  POUT=0.20000E+06
+                              DUTY=0.10915E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     30.18
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.75022E-01
+              1     0.16971E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     30.56
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510546      Q = -261279.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     30.56
+      ITER  10 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   10:   5 VARS NOT CONVERGED, MAX ERR/TOL     -3.4779        TIME =     30.56
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     30.56
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205356.      V = 7.517301E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     30.56
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20536E+06   TOUT=  336.66  POUT=0.20536E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.86  POUT=0.20000E+06
+                              DUTY=0.10915E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     30.56
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.61832E-01
+              1     0.19962E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     30.96
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510523      Q = -261319.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     30.96
+      ITER  11 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   11:   8 VARS NOT CONVERGED, MAX ERR/TOL      3.9104        TIME =     30.96
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     30.96
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205354.      V = 7.517480E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     30.96
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.66  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.86  POUT=0.20000E+06
+                              DUTY=0.10915E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     30.96
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.58410E-01
+              1     0.48886E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     31.35
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510531      Q = -261311.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     31.35
+      ITER  12 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   12:     *** CONVERGED *** , MAX ERR/TOL    -0.50282        TIME =     31.35
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     31.35
+      ITER   3 For Specs:        DS-1
+      SPEC   1 ERROR = -0.24001                              X =  0.91101E+06
+
+  LOOP $OLVER02 ITER    3:     *** CONVERGED *** , MAX ERR/TOL    -0.48003        TIME =     31.35
+
+      UOS BLOCK SPLIT    MODEL: FSPLIT                                            TIME =     31.35
+      SPLIT FRACTIONS:  0.60417D+00    0.39583D+00
+
+      ENTHALPY CALCULATION FOR INLET STREAM MAKEUP OF BLOCK MIXER                 TIME =     31.35
+      KODE = 2  NTRIAL =   2  T =  308.150      P =  106000.      V =  0.00000      Q =  0.00000    
+
+      UOS BLOCK MIXER    MODEL: MIXER                                             TIME =     31.35
+      KODE = 1  NTRIAL =   9  T =  336.616      P =  106000.      V =  0.00000      Q =  0.00000    
+
+      UOS BLOCK COOLER   MODEL: HEATER                                            TIME =     31.35
+      KODE = 2  NTRIAL =   3  T =  308.150      P =  106000.      V =  0.00000      Q = -524663.    
+
+      GENERATING RESULTS FOR UOS BLOCK PUMP     MODEL: PUMP                       TIME =     31.35
+      KODE = 5  NTRIAL =   3  T =  327.397      P =  103150.      V =  0.00000      Q = -400.951    
+      VOL-FLOW   =  0.5229E-02 , DELTA P    =  0.9141E+05 , PUMP EFF   =  0.5107    
+      FLUID PWR  =   477.9     , BRAKE PWR  =   935.9     , ELEC PWR   =   935.9    
+      NPSH AVAIL =   4.874    
+
+      GENERATING RESULTS FOR UOS BLOCK COOLER   MODEL: HEATER                     TIME =     31.36
+
+      GENERATING RESULTS FOR UOS BLOCK HX       MODEL: HEATX                      TIME =     31.36
+      SPECIFICATION: HOT APPROACH TEMP     9.2000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.66  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.86  POUT=0.20000E+06
+      AREA= 129.02           DUTY=0.10915E+07       FT=1.00000
+
+      BEGIN HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 1.061864E-02
+      KODE = 1  NTRIAL =   4  T =  379.855      P =  200000.      V = 1.061864E-02  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 8.372413E-03
+      KODE = 1  NTRIAL =   3  T =  378.537      P =  200000.      V = 8.372413E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 6.345275E-03
+      KODE = 1  NTRIAL =   2  T =  377.100      P =  200000.      V = 6.345275E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 4.529108E-03
+      KODE = 1  NTRIAL =   3  T =  375.543      P =  200000.      V = 4.529108E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 1 VAR = 2.912432E-03
+      KODE = 1  NTRIAL =   3  T =  373.869      P =  200000.      V = 2.912432E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 1 VAR = 1.483362E-03
+      KODE = 1  NTRIAL =   2  T =  372.077      P =  200000.      V = 1.483362E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   8 IFLAG = 1 VAR = 3.003741E-04
+      KODE = 1  NTRIAL =   2  T =  370.119      P =  200000.      V = 3.003741E-04  Q =  0.00000    
+      H-LOOP : NTRIAL =  12 IFLAG = 1 VAR = 2.780778E-05
+      KODE = 1  NTRIAL =   4  T =  367.506      P =  200000.      V = 2.780778E-05  Q =  0.00000    
+      H-LOOP : NTRIAL =   9 IFLAG = 1 VAR = 8.389723E-06
+      KODE = 1  NTRIAL =   2  T =  364.701      P =  200000.      V = 8.389723E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =  12 IFLAG = 1 VAR = 2.440268E-06
+      KODE = 1  NTRIAL =   2  T =  361.877      P =  200000.      V = 2.440268E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 2 VAR =  359.043    
+      KODE = 1  NTRIAL =   1  T =  359.043      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 3  NTRIAL =   6  T =  359.542      P =  200000.      V =  0.00000      Q = -510611.    
+      KODE = 1  NTRIAL =  14  T =  359.043      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  356.198      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  353.347      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  350.490      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  347.627      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  344.758      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  341.885      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  339.007      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  336.125      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  333.240      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  330.351      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  13  T =  327.459      P =  200000.      V =  0.00000      Q =  0.00000    
+
+      BEGIN HOT-TQCURVE  INLET   
+      KODE = 1  NTRIAL = 101  T =  395.150      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  392.421      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  389.687      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  386.945      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  384.197      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  381.442      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  378.680      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  375.912      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  373.138      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  370.359      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  368.064      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  367.574      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  364.784      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  361.990      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  359.191      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  356.388      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  353.580      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  350.769      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  347.953      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  345.135      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  342.313      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  339.487      P =  205354.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  336.658      P =  205354.      V =  0.00000      Q =  0.00000    
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+ Report Writer entered                                                            Time =     31.60
+
+      BEGIN HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+ Results generated                                                                Time =     31.74
+
+RUN SAVED
+
+
+
+ *** SUMMARY OF ERRORS ***
+
+                  PHYSICAL
+                  PROPERTY  SYSTEM  SIMULATION
+ TERMINAL ERRORS      0        0         0
+   SEVERE ERRORS      0        0        17
+          ERRORS      0        0         0
+        WARNINGS      0        0         7
+
+RUN SAVED
+
+
+
+ *** SUMMARY OF ERRORS ***
+
+                  PHYSICAL
+                  PROPERTY  SYSTEM  SIMULATION
+ TERMINAL ERRORS      0        0         0
+   SEVERE ERRORS      0        0        17
+          ERRORS      0        0         0
+        WARNINGS      0        0         7
+
+ *** CALCULATION TRACE ***
+
+
+<set objective = None>
+
+
+*** INPUT SPECIFICATION MESSAGES ***
+
+ CHANGES WERE MADE TO BLOCK        HX       06/04/2025   15:40:56:99 
+ BLOCK HX HEATX
+     PARAM DELT-HOT=9.8 <C> CALC-TYPE=DESIGN MIN-TAPP=5.  &
+         U-OPTION=PHASE F-OPTION=CONSTANT CALC-METHOD=SHORTCUT
+     FEEDS HOT=ABSMEA COLD=STRPMEAC
+     OUTLETS-HOT ABSMEAC
+     OUTLETS-COLD STRPMEAH
+     FLASH-SPECS ABSMEAC NPHASE=2 FREE-WATER=NO MAXIT=250
+     FLASH-SPECS STRPMEAH NPHASE=2 FREE-WATER=NO MAXIT=250
+     HOT-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+     COLD-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+     TQ-PARAM CURVE=YES
+
+ BLOCK        ABSORBER IS GENERATED BECAUSE OF OTHER CHANGES 06/04/2025   15:40:56:99 
+ BLOCK ABSORBER RADFRAC
+     SUBOBJECTS INTERNALS = P-1 P-2
+     PARAM NSTAGE=24 ALGORITHM=STANDARD MAXOL=35 P-UPDATE=YES  &
+         P-FIX=TOP DAMPING=NONE
+     PARAM2 STATIC-DP=NO OLD-SULZER=NO
+     COL-CONFIG CONDENSER=NONE REBOILER=NONE CA-CONFIG=OPT-R
+     RATESEP-ENAB CALC-MODE=RIG-RATE
+     RATESEP-PARA RBRXN=0.9 DISC-RATIO=10.
+     FEEDS FLUEGAS 24 ON-STAGE / LEANMEA 5 ON-STAGE /  &
+         WASHWAT 1 ON-STAGE
+     PRODUCTS FLUEOFF 1 V / RICHMEA 24 L / WATSPLIT 4 TL
+     P-SPEC 1 106. <KPA>
+     COL-SPECS DP-COL=6. <KPA>
+     REAC-STAGES 5 24 MEA-REA
+     INTERNALS P-1 STAGE1=1 STAGE2=4 INTERNAL=PACKING  &
+         SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+         LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+         VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+         MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 AREA-FACTOR=2.1  &
+         NLPOINTS=5 PACK-HT=4. THETA=45
+     PACK-RATE 1 1 4 MELLAPAK
+     PACK-RATE2 1
+     INTERNALS P-2 STAGE1=5 STAGE2=24 INTERNAL=PACKING  &
+         SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+         LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+         VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+         MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 HOLDUP-CORP=BRF-92  &
+         AREA-FACTOR=2. NLPOINTS=5 PACK-HT=20. THETA=45
+     PACK-RATE 2 5 24 MELLAPAK
+     PACK-RATE2 2
+
+ BLOCK        STRIPPER IS GENERATED BECAUSE OF OTHER CHANGES 06/04/2025   15:40:56:99 
+ BLOCK STRIPPER RADFRAC
+     SUBOBJECTS INTERNALS = P-1 P-2
+     PARAM NSTAGE=18 ALGORITHM=STANDARD MAXOL=35 P-UPDATE=YES  &
+         P-FIX=TOP DAMPING=NONE
+     PARAM2 STATIC-DP=NO OLD-SULZER=NO
+     COL-CONFIG CONDENSER=NONE REBOILER=NONE CA-CONFIG=OPT-R
+     RATESEP-ENAB CALC-MODE=RIG-RATE
+     RATESEP-PARA RBRXN=0.9 DISC-RATIO=10.
+     FEEDS STRPMEAH 3 ON-STAGE / TOP-LQU 1 ON-STAGE /  &
+         BOT-VAP 18 ON-STAGE
+     PRODUCTS TOP-VAP 1 V / BOT-LQU 18 L
+     P-SPEC 1 200. <KPA>
+     COL-SPECS DP-COL=6. <KPA>
+     REAC-STAGES 3 18 MEA-REA
+     INTERNALS P-1 STAGE1=1 STAGE2=2 INTERNAL=PACKING  &
+         SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+         LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+         VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+         MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 AREA-FACTOR=1.  &
+         NLPOINTS=5 PACK-HT=2. THETA=45
+     PACK-RATE 1 1 2 MELLAPAK
+     PACK-RATE2 1
+     INTERNALS P-2 STAGE1=3 STAGE2=18 INTERNAL=PACKING  &
+         SIZING=RATING RATE-BASE=YES P-UPDATE=YES DIAM=1.1  &
+         LIQ-FILM=DISCRXN VAP-FILM=FILM PACKTYPE=MELLAPAK  &
+         VENDOR=SULZER PACK-MAT=STANDARD PACK-SIZE="250Y"  &
+         MTRFC-CORP=BRF-85 INTFA-CORP=BRF-85 HOLDUP-CORP=BRF-92  &
+         NLPOINTS=5 PACK-HT=16. THETA=45
+     PACK-RATE 2 3 18 MELLAPAK
+     PACK-RATE2 2
+
+ PDF updated                                                                      TIME =     20.18
+ THIS COPY OF ASPEN PLUS LICENSED TO VIENNA UNIVERSITY OF TEC        
+ 
+ DESIGN SPEC: DS-1 WILL BE INTERPRETED 
+ 
+
+Calculations begin                                                              time     21.42
+
+
+ SIMULATION CALCULATIONS BEGIN                                                    TIME =     21.42
+
+      UOS BLOCK ABSORBER MODEL: RADFRAC                                           TIME =     21.42
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: ABSORBER
+           Iter     Err/Tol
+              0      1.3106    
+              1     0.88697E-03
+
+      UOS BLOCK PUMP     MODEL: PUMP                                              TIME =     21.79
+      VOL-FLOW   =  0.5229E-02 , DELTA P    =  0.9141E+05 , PUMP EFF   =  0.5107    
+      FLUID PWR  =   477.9     , BRAKE PWR  =   935.9     , ELEC PWR   =   935.9    
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     21.79
+      ITER   0 For Specs:        DS-1
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     21.79
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     21.79
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205357.      V = 7.515033E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     21.79
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20536E+06   TOUT=  337.26  POUT=0.20536E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10805E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     21.84
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.6089    
+              1      1.7306    
+              2     0.76135E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     23.55
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515760      Q = -254426.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     23.56
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  15 VARS NOT CONVERGED, MAX ERR/TOL     -490.77        TIME =     23.57
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     23.58
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205632.      V = 7.481440E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     23.59
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20563E+06   TOUT=  337.26  POUT=0.20563E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.59  POUT=0.20000E+06
+                              DUTY=0.10809E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     23.59
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.5485    
+              1     0.12595    
+              2     0.31149E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     24.77
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.514685      Q = -255213.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     24.77
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  15 VARS NOT CONVERGED, MAX ERR/TOL      72.690        TIME =     24.77
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     24.77
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205719.      V = 7.473763E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     24.77
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20572E+06   TOUT=  337.26  POUT=0.20572E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10802E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     24.77
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.45087    
+              1     0.50088E-01
+              2     0.21585E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     26.37
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515045      Q = -254587.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     26.37
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:   6 VARS NOT CONVERGED, MAX ERR/TOL      14.627        TIME =     26.37
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     26.37
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205718.      V = 7.475541E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     26.37
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20572E+06   TOUT=  337.26  POUT=0.20572E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10802E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     26.37
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.86736E-01
+              1     0.71451E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     27.22
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515094      Q = -254565.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     27.22
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  10 VARS NOT CONVERGED, MAX ERR/TOL     -3.0649        TIME =     27.22
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     27.22
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205713.      V = 7.476170E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     27.22
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20571E+06   TOUT=  337.26  POUT=0.20571E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10802E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     27.22
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.60895E-01
+              1     0.81944E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     28.20
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515097      Q = -254574.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     28.20
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:   3 VARS NOT CONVERGED, MAX ERR/TOL     -1.3427        TIME =     28.20
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     28.21
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205711.      V = 7.476416E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     28.21
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20571E+06   TOUT=  337.26  POUT=0.20571E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10802E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     28.21
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.56466E-01
+              1     0.55480E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     28.98
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515081      Q = -254598.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     28.98
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:   2 VARS NOT CONVERGED, MAX ERR/TOL      1.4298        TIME =     28.98
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     28.98
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205709.      V = 7.476572E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     28.98
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20571E+06   TOUT=  337.26  POUT=0.20571E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10802E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     28.98
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.55634E-01
+              1     0.10569E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     29.70
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515085      Q = -254596.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     29.71
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:     *** CONVERGED *** , MAX ERR/TOL    -0.89854        TIME =     29.71
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     29.71
+      ITER   1 For Specs:        DS-1
+      SPEC   1 ERROR =  -7.5366     OLD X =  0.91101E+06 NEW X =  0.91785E+06
+
+  LOOP $OLVER02 ITER    1:   1 VARS NOT CONVERGED, MAX ERR/TOL     -15.073        TIME =     29.71
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     29.71
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     29.71
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205635.      V = 7.543467E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     29.71
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20564E+06   TOUT=  337.26  POUT=0.20564E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.56  POUT=0.20000E+06
+                              DUTY=0.10796E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     29.71
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.2733    
+              1     0.38111    
+              2     0.21564E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     30.79
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515190      Q = -256145.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     30.79
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  14 VARS NOT CONVERGED, MAX ERR/TOL     -124.94        TIME =     30.79
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     30.79
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205251.      V = 7.594018E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     30.79
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20525E+06   TOUT=  337.26  POUT=0.20525E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10805E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     30.79
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.2889    
+              1     0.64691    
+              2     0.13377E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     31.71
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.515125      Q = -257205.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     31.71
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  14 VARS NOT CONVERGED, MAX ERR/TOL     -91.064        TIME =     31.71
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     31.71
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205302.      V = 7.580317E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     31.71
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20530E+06   TOUT=  337.26  POUT=0.20530E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.59  POUT=0.20000E+06
+                              DUTY=0.10806E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     31.71
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.57812    
+              1     0.18639E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     32.14
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.514955      Q = -257116.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     32.14
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  12 VARS NOT CONVERGED, MAX ERR/TOL      12.309        TIME =     32.14
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     32.14
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205348.      V = 7.574676E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     32.15
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  337.26  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10805E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     32.15
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.26322    
+              1     0.95949E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     32.59
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.514988      Q = -256966.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     32.59
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  11 VARS NOT CONVERGED, MAX ERR/TOL     -4.9765        TIME =     32.59
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     32.59
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205336.      V = 7.574979E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     32.59
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20534E+06   TOUT=  337.26  POUT=0.20534E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10805E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     32.59
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.70735E-01
+              1     0.25801E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     33.43
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.514974      Q = -256982.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     33.44
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:   9 VARS NOT CONVERGED, MAX ERR/TOL      2.4034        TIME =     33.44
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     33.44
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205340.      V = 7.574258E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     33.44
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20534E+06   TOUT=  337.26  POUT=0.20534E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10805E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     33.44
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.62826E-01
+              1     0.99987E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     34.46
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.514973      Q = -256970.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     34.46
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:   1 VARS NOT CONVERGED, MAX ERR/TOL      1.0859        TIME =     34.46
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     34.46
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205343.      V = 7.573998E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     34.46
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20534E+06   TOUT=  337.26  POUT=0.20534E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+                              DUTY=0.10805E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     34.46
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.56968E-01
+              1     0.19702E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     35.56
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.514972      Q = -256967.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     35.56
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:     *** CONVERGED *** , MAX ERR/TOL     0.43451        TIME =     35.56
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     35.56
+      ITER   2 For Specs:        DS-1
+      SPEC   1 ERROR =  0.64780E-01                          X =  0.91785E+06
+
+  LOOP $OLVER02 ITER    2:     *** CONVERGED *** , MAX ERR/TOL     0.12956        TIME =     35.56
+
+      UOS BLOCK SPLIT    MODEL: FSPLIT                                            TIME =     35.56
+      SPLIT FRACTIONS:  0.60417D+00    0.39583D+00
+
+      UOS BLOCK MIXER    MODEL: MIXER                                             TIME =     35.56
+      KODE = 1  NTRIAL =   5  T =  337.208      P =  106000.      V =  0.00000      Q =  0.00000    
+
+      UOS BLOCK COOLER   MODEL: HEATER                                            TIME =     35.57
+      KODE = 2  NTRIAL =   2  T =  308.150      P =  106000.      V =  0.00000      Q = -535640.    
+
+      GENERATING RESULTS FOR UOS BLOCK PUMP     MODEL: PUMP                       TIME =     35.57
+      KODE = 5  NTRIAL =   3  T =  327.396      P =  103151.      V =  0.00000      Q = -415.768    
+      VOL-FLOW   =  0.5229E-02 , DELTA P    =  0.9141E+05 , PUMP EFF   =  0.5107    
+      FLUID PWR  =   477.9     , BRAKE PWR  =   935.9     , ELEC PWR   =   935.9    
+      NPSH AVAIL =   4.872    
+
+      GENERATING RESULTS FOR UOS BLOCK COOLER   MODEL: HEATER                     TIME =     35.57
+
+      GENERATING RESULTS FOR UOS BLOCK HX       MODEL: HEATX                      TIME =     35.57
+      SPECIFICATION: HOT APPROACH TEMP     9.8000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20534E+06   TOUT=  337.26  POUT=0.20534E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.58  POUT=0.20000E+06
+      AREA= 121.06           DUTY=0.10805E+07       FT=1.00000
+
+      BEGIN HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 1.012672E-02
+      KODE = 1  NTRIAL =   4  T =  379.585      P =  200000.      V = 1.012672E-02  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 7.949026E-03
+      KODE = 1  NTRIAL =   3  T =  378.256      P =  200000.      V = 7.949026E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 5.984009E-03
+      KODE = 1  NTRIAL =   3  T =  376.809      P =  200000.      V = 5.984009E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 4.224741E-03
+      KODE = 1  NTRIAL =   3  T =  375.247      P =  200000.      V = 4.224741E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 1 VAR = 2.656973E-03
+      KODE = 1  NTRIAL =   3  T =  373.568      P =  200000.      V = 2.656973E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 1 VAR = 1.273212E-03
+      KODE = 1  NTRIAL =   3  T =  371.775      P =  200000.      V = 1.273212E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   9 IFLAG = 1 VAR = 1.898533E-04
+      KODE = 1  NTRIAL =   3  T =  369.774      P =  200000.      V = 1.898533E-04  Q =  0.00000    
+      H-LOOP : NTRIAL =   9 IFLAG = 1 VAR = 2.290204E-05
+      KODE = 1  NTRIAL =   3  T =  367.113      P =  200000.      V = 2.290204E-05  Q =  0.00000    
+      H-LOOP : NTRIAL =   8 IFLAG = 1 VAR = 7.284081E-06
+      KODE = 1  NTRIAL =   3  T =  364.332      P =  200000.      V = 7.284081E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =   9 IFLAG = 1 VAR = 2.002235E-06
+      KODE = 1  NTRIAL =   2  T =  361.535      P =  200000.      V = 2.002235E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 2 VAR =  358.728    
+      KODE = 1  NTRIAL =   1  T =  358.728      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 3  NTRIAL =   6  T =  359.536      P =  200000.      V =  0.00000      Q = -499710.    
+      KODE = 1  NTRIAL =  14  T =  358.728      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  355.912      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  353.089      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  350.260      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  347.425      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  344.585      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  341.740      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  338.891      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  336.038      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  333.182      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  330.322      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  13  T =  327.459      P =  200000.      V =  0.00000      Q =  0.00000    
+
+      BEGIN HOT-TQCURVE  INLET   
+      KODE = 1  NTRIAL =  21  T =  395.151      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  392.448      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  389.742      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  387.028      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  384.308      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  381.581      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  378.847      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  376.108      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  373.362      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  370.611      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  368.648      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  367.855      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  365.094      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  362.329      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  359.559      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  356.784      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  354.006      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  351.223      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  348.437      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  345.647      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  342.854      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  340.058      P =  205343.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  337.258      P =  205343.      V =  0.00000      Q =  0.00000    
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+ Report Writer entered                                                            Time =     35.72
+
+      BEGIN HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+ Results generated                                                                Time =     36.02
+
+
+*** INPUT SPECIFICATION MESSAGES ***
+
+ CHANGES WERE MADE TO BLOCK        HX       06/04/2025   15:41:50:99 
+ BLOCK HX HEATX
+     PARAM DELT-HOT=9.3 <C> CALC-TYPE=DESIGN MIN-TAPP=5.  &
+         U-OPTION=PHASE F-OPTION=CONSTANT CALC-METHOD=SHORTCUT
+     FEEDS HOT=ABSMEA COLD=STRPMEAC
+     OUTLETS-HOT ABSMEAC
+     OUTLETS-COLD STRPMEAH
+     FLASH-SPECS ABSMEAC NPHASE=2 FREE-WATER=NO MAXIT=250
+     FLASH-SPECS STRPMEAH NPHASE=2 FREE-WATER=NO MAXIT=250
+     HOT-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+     COLD-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+     TQ-PARAM CURVE=YES
+
+ PDF updated                                                                      TIME =     74.13
+ THIS COPY OF ASPEN PLUS LICENSED TO VIENNA UNIVERSITY OF TEC        
+ 
+ DESIGN SPEC: DS-1 WILL BE INTERPRETED 
+ 
+
+
+Calculations begin                                                              time     74.14
+
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     74.14
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20534E+06   TOUT=  336.76  POUT=0.20534E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     74.20
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.1764    
+              1      1.1891    
+              2     0.37553E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     75.48
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.510662      Q = -262644.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     75.48
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     75.48
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205161.      V = 7.600939E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     75.48
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20516E+06   TOUT=  336.76  POUT=0.20516E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.79  POUT=0.20000E+06
+                              DUTY=0.10890E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     75.49
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      2.0357    
+              1     0.49853E-01
+              2     0.25797E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     76.20
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511667      Q = -261816.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     76.20
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  15 VARS NOT CONVERGED, MAX ERR/TOL     -71.966        TIME =     76.20
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     76.20
+      KODE = 4  NTRIAL =   6  T =  395.150      P =  205066.      V = 7.608153E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     76.20
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20507E+06   TOUT=  336.76  POUT=0.20507E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10898E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     76.20
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.49595    
+              1     0.64576E-01
+              2     0.76566E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     77.64
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511212      Q = -262567.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     77.64
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  12 VARS NOT CONVERGED, MAX ERR/TOL      16.592        TIME =     77.64
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     77.64
+      KODE = 4  NTRIAL =   6  T =  395.150      P =  205034.      V = 7.610754E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     77.64
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20503E+06   TOUT=  336.76  POUT=0.20503E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.82  POUT=0.20000E+06
+                              DUTY=0.10900E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     77.64
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.18833    
+              1     0.36717E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     78.23
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511188      Q = -262647.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     78.23
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  12 VARS NOT CONVERGED, MAX ERR/TOL      6.5990        TIME =     78.23
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     78.23
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205047.      V = 7.608347E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     78.23
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20505E+06   TOUT=  336.76  POUT=0.20505E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.82  POUT=0.20000E+06
+                              DUTY=0.10900E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     78.24
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.10918    
+              1     0.12552E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     78.67
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511201      Q = -262578.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     78.67
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  10 VARS NOT CONVERGED, MAX ERR/TOL      3.8669        TIME =     78.67
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     78.67
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205058.      V = 7.607098E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     78.67
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20506E+06   TOUT=  336.76  POUT=0.20506E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10899E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     78.67
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.81371E-01
+              1     0.51844E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     79.39
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511208      Q = -262546.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     79.40
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:   1 VARS NOT CONVERGED, MAX ERR/TOL     -1.1513        TIME =     79.40
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     79.40
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205055.      V = 7.607605E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     79.40
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20506E+06   TOUT=  336.76  POUT=0.20506E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10899E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     79.40
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.59969E-01
+              1     0.51296E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     79.99
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511210      Q = -262555.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     79.99
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:     *** CONVERGED *** , MAX ERR/TOL    -0.26248        TIME =     79.99
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     79.99
+      ITER   0 For Specs:        DS-1
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     79.99
+      ITER   1 For Specs:        DS-1
+      SPEC   1 ERROR =   6.1492     OLD X =  0.91785E+06 NEW X =  0.91269E+06
+
+  LOOP $OLVER02 ITER    1:   1 VARS NOT CONVERGED, MAX ERR/TOL      12.298        TIME =     79.99
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     80.00
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     80.00
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205108.      V = 7.557180E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     80.00
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20511E+06   TOUT=  336.76  POUT=0.20511E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.83  POUT=0.20000E+06
+                              DUTY=0.10904E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     80.00
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0      1.7148    
+              1     0.22695    
+              2     0.86019E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     80.70
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511124      Q = -261378.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     80.71
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  14 VARS NOT CONVERGED, MAX ERR/TOL      95.170        TIME =     80.71
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     80.71
+      KODE = 4  NTRIAL =   9  T =  395.150      P =  205316.      V = 7.545954E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     80.71
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20532E+06   TOUT=  336.76  POUT=0.20532E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     80.71
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.82292    
+              1     0.10397    
+              2     0.44995E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     81.89
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511310      Q = -261019.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     81.89
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  13 VARS NOT CONVERGED, MAX ERR/TOL     -22.236        TIME =     81.89
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     81.89
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205279.      V = 7.543116E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     81.89
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20528E+06   TOUT=  336.76  POUT=0.20528E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10898E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     81.89
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.15386    
+              1     0.46710E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     82.64
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511264      Q = -260972.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     82.64
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  12 VARS NOT CONVERGED, MAX ERR/TOL      9.4725        TIME =     82.64
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     82.64
+      KODE = 4  NTRIAL =  11  T =  395.150      P =  205301.      V = 7.532832E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     82.65
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20530E+06   TOUT=  336.76  POUT=0.20530E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10898E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     82.65
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.36251    
+              1     0.11557E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     83.31
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511254      Q = -260734.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     83.31
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  13 VARS NOT CONVERGED, MAX ERR/TOL      20.898        TIME =     83.31
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     83.31
+      KODE = 4  NTRIAL =  31  T =  395.150      P =  205380.      V = 7.532646E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     83.32
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20538E+06   TOUT=  336.76  POUT=0.20538E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.80  POUT=0.20000E+06
+                              DUTY=0.10895E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     83.32
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.26727    
+              1     0.80444E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     84.13
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511334      Q = -260695.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     84.13
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:  14 VARS NOT CONVERGED, MAX ERR/TOL     -33.315        TIME =     84.13
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     84.13
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205325.      V = 7.538664E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     84.13
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20532E+06   TOUT=  336.76  POUT=0.20532E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     84.14
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.28759    
+              1     0.12050E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     84.84
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511294      Q = -260855.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     84.84
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:  12 VARS NOT CONVERGED, MAX ERR/TOL     -11.169        TIME =     84.84
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     84.84
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205302.      V = 7.540254E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     84.84
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20530E+06   TOUT=  336.76  POUT=0.20530E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     84.84
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.11188    
+              1     0.14566E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     85.46
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511275      Q = -260902.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     85.46
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:     *** CONVERGED *** , MAX ERR/TOL     0.92052        TIME =     85.46
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     85.46
+      ITER   2 For Specs:        DS-1
+      SPEC   1 ERROR =  0.88636     OLD X =  0.91269E+06 NEW X =  0.91182E+06
+
+  LOOP $OLVER02 ITER    2:   1 VARS NOT CONVERGED, MAX ERR/TOL      1.7727        TIME =     85.46
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     85.46
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     85.46
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205312.      V = 7.531098E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     85.46
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20531E+06   TOUT=  336.76  POUT=0.20531E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10898E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     85.46
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.31600    
+              1     0.73663E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     86.41
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511261      Q = -260687.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     86.41
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  12 VARS NOT CONVERGED, MAX ERR/TOL      18.188        TIME =     86.41
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     86.41
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205351.      V = 7.526214E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     86.41
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.76  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     86.41
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.22576    
+              1     0.70339E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     86.92
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511291      Q = -260554.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     86.92
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:   9 VARS NOT CONVERGED, MAX ERR/TOL      2.9770        TIME =     86.92
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     86.92
+      KODE = 4  NTRIAL =   9  T =  395.150      P =  205372.      V = 7.512559E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     86.93
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20537E+06   TOUT=  336.76  POUT=0.20537E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10898E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     86.93
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.47179    
+              1     0.18046E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     87.56
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511273      Q = -260237.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     87.56
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  13 VARS NOT CONVERGED, MAX ERR/TOL      23.891        TIME =     87.56
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     87.56
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205387.      V = 7.522180E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     87.57
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20539E+06   TOUT=  336.76  POUT=0.20539E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     87.57
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.33493    
+              1     0.40263E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     88.27
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511310      Q = -260453.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     88.27
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  12 VARS NOT CONVERGED, MAX ERR/TOL     -11.703        TIME =     88.27
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     88.27
+      KODE = 4  NTRIAL =  12  T =  395.150      P =  205391.      V = 7.509323E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     88.28
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20539E+06   TOUT=  336.76  POUT=0.20539E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     88.28
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.44096    
+              1     0.12389E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     88.99
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511288      Q = -260147.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     88.99
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:  12 VARS NOT CONVERGED, MAX ERR/TOL      18.685        TIME =     88.99
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     88.99
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205385.      V = 7.520489E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     88.99
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20538E+06   TOUT=  336.76  POUT=0.20538E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     89.00
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.38146    
+              1     0.97757E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     89.75
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511311      Q = -260406.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     89.75
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:  12 VARS NOT CONVERGED, MAX ERR/TOL     -5.7169        TIME =     89.75
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     89.75
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205384.      V = 7.520712E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     89.75
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20538E+06   TOUT=  336.76  POUT=0.20538E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     89.75
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.56909E-01
+              1     0.10670E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     90.43
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511309      Q = -260414.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     90.43
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:  12 VARS NOT CONVERGED, MAX ERR/TOL     -5.8126        TIME =     90.43
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     90.43
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205382.      V = 7.521004E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     90.43
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20538E+06   TOUT=  336.76  POUT=0.20538E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     90.43
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.57010E-01
+              1     0.20058E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     91.05
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511312      Q = -260416.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     91.05
+      ITER   8 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    8:  11 VARS NOT CONVERGED, MAX ERR/TOL     -4.7849        TIME =     91.05
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     91.05
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205378.      V = 7.521380E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     91.05
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20538E+06   TOUT=  336.76  POUT=0.20538E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     91.06
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.58326E-01
+              1     0.82202E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     91.72
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511299      Q = -260441.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     91.72
+      ITER   9 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    9:  10 VARS NOT CONVERGED, MAX ERR/TOL     -3.5757        TIME =     91.72
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     91.72
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205375.      V = 7.521763E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     91.72
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20537E+06   TOUT=  336.76  POUT=0.20537E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     91.72
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.59028E-01
+              1     0.28519E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     92.38
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511305      Q = -260439.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     92.38
+      ITER  10 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   10:   3 VARS NOT CONVERGED, MAX ERR/TOL     -2.0144        TIME =     92.38
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     92.38
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205367.      V = 7.522608E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     92.38
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20537E+06   TOUT=  336.76  POUT=0.20537E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     92.38
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.67758E-01
+              1     0.28979E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     92.83
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511291      Q = -260474.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     92.83
+      ITER  11 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   11:   1 VARS NOT CONVERGED, MAX ERR/TOL      1.0128        TIME =     92.83
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     92.83
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205370.      V = 7.522105E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     92.83
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20537E+06   TOUT=  336.76  POUT=0.20537E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     92.83
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.59028E-01
+              1     0.55845E-04
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     93.30
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511291      Q = -260463.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     93.31
+      ITER  12 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER   12:     *** CONVERGED *** , MAX ERR/TOL     0.92585        TIME =     93.31
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     93.31
+      ITER   3 For Specs:        DS-1
+      SPEC   1 ERROR = -0.51817     OLD X =  0.91182E+06 NEW X =  0.91213E+06
+
+  LOOP $OLVER02 ITER    3:   1 VARS NOT CONVERGED, MAX ERR/TOL     -1.0363        TIME =     93.31
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     93.31
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     93.31
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205367.      V = 7.525201E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     93.31
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20537E+06   TOUT=  336.76  POUT=0.20537E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10896E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     93.31
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.11918    
+              1     0.74724E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     94.05
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511304      Q = -260525.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     94.05
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  12 VARS NOT CONVERGED, MAX ERR/TOL     -5.6459        TIME =     94.05
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     94.05
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205358.      V = 7.526334E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     94.05
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20536E+06   TOUT=  336.76  POUT=0.20536E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     94.05
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.76129E-01
+              1     0.39564E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     94.62
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511296      Q = -260557.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     94.62
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:   3 VARS NOT CONVERGED, MAX ERR/TOL     -2.0186        TIME =     94.63
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     94.63
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205350.      V = 7.528739E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     94.63
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.76  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     94.63
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.10321    
+              1     0.80232E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     95.30
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511296      Q = -260613.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     95.30
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:   9 VARS NOT CONVERGED, MAX ERR/TOL     -2.6436        TIME =     95.30
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     95.30
+      KODE = 4  NTRIAL =   9  T =  395.150      P =  205344.      V = 7.522585E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     95.30
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20534E+06   TOUT=  336.76  POUT=0.20534E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10898E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     95.31
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.21311    
+              1     0.20220E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     96.16
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511273      Q = -260475.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     96.16
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  12 VARS NOT CONVERGED, MAX ERR/TOL      17.048        TIME =     96.16
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     96.16
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205350.      V = 7.526756E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     96.16
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.76  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     96.16
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.15088    
+              1     0.78767E-03
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     96.67
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511290      Q = -260569.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     96.67
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:   8 VARS NOT CONVERGED, MAX ERR/TOL      2.2554        TIME =     96.67
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     96.67
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205352.      V = 7.526785E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     96.67
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.76  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     96.68
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.55523E-01
+              1     0.78797E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     97.38
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511288      Q = -260574.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     97.38
+      ITER   6 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    6:   1 VARS NOT CONVERGED, MAX ERR/TOL      1.0173        TIME =     97.38
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =     97.38
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205353.      V = 7.526684E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =     97.38
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.76  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+                              DUTY=0.10897E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =     97.38
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.55576E-01
+              1     0.52523E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =     98.00
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511288      Q = -260573.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =     98.00
+      ITER   7 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    7:     *** CONVERGED *** , MAX ERR/TOL     0.37888        TIME =     98.00
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =     98.01
+      ITER   4 For Specs:        DS-1
+      SPEC   1 ERROR = -0.16472                              X =  0.91213E+06
+
+  LOOP $OLVER02 ITER    4:     *** CONVERGED *** , MAX ERR/TOL    -0.32944        TIME =     98.01
+
+      UOS BLOCK MIXER    MODEL: MIXER                                             TIME =     98.01
+      KODE = 1  NTRIAL =   5  T =  336.714      P =  106000.      V =  0.00000      Q =  0.00000    
+
+      UOS BLOCK COOLER   MODEL: HEATER                                            TIME =     98.01
+      KODE = 2  NTRIAL =   2  T =  308.150      P =  106000.      V =  0.00000      Q = -526484.    
+
+      GENERATING RESULTS FOR UOS BLOCK COOLER   MODEL: HEATER                     TIME =     98.01
+
+      GENERATING RESULTS FOR UOS BLOCK HX       MODEL: HEATX                      TIME =     98.01
+      SPECIFICATION: HOT APPROACH TEMP     9.3000    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20535E+06   TOUT=  336.76  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.81  POUT=0.20000E+06
+      AREA= 127.63           DUTY=0.10896E+07       FT=1.00000
+
+      BEGIN HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 1.053794E-02
+      KODE = 1  NTRIAL =   4  T =  379.809      P =  200000.      V = 1.053794E-02  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 8.303277E-03
+      KODE = 1  NTRIAL =   3  T =  378.489      P =  200000.      V = 8.303277E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 6.286608E-03
+      KODE = 1  NTRIAL =   2  T =  377.051      P =  200000.      V = 6.286608E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 4.480371E-03
+      KODE = 1  NTRIAL =   2  T =  375.493      P =  200000.      V = 4.480371E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   7 IFLAG = 1 VAR = 2.871649E-03
+      KODE = 1  NTRIAL =   2  T =  373.818      P =  200000.      V = 2.871649E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 1 VAR = 1.449708E-03
+      KODE = 1  NTRIAL =   2  T =  372.025      P =  200000.      V = 1.449708E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   7 IFLAG = 1 VAR = 2.808067E-04
+      KODE = 1  NTRIAL =   2  T =  370.062      P =  200000.      V = 2.808067E-04  Q =  0.00000    
+      H-LOOP : NTRIAL =  12 IFLAG = 1 VAR = 2.695751E-05
+      KODE = 1  NTRIAL =   4  T =  367.440      P =  200000.      V = 2.695751E-05  Q =  0.00000    
+      H-LOOP : NTRIAL =   9 IFLAG = 1 VAR = 8.210867E-06
+      KODE = 1  NTRIAL =   2  T =  364.640      P =  200000.      V = 8.210867E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =   7 IFLAG = 1 VAR = 2.370876E-06
+      KODE = 1  NTRIAL =   2  T =  361.820      P =  200000.      V = 2.370876E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 2 VAR =  358.990    
+      KODE = 1  NTRIAL =   1  T =  358.990      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 3  NTRIAL =   6  T =  359.536      P =  200000.      V =  0.00000      Q = -508878.    
+      KODE = 1  NTRIAL =  14  T =  358.991      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  356.151      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  353.304      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  350.452      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  347.593      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  344.729      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  341.861      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  338.988      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  336.110      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  333.230      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  330.346      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  13  T =  327.458      P =  200000.      V =  0.00000      Q =  0.00000    
+
+      BEGIN HOT-TQCURVE  INLET   
+      KODE = 1  NTRIAL =  26  T =  395.150      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  392.425      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  389.696      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  386.959      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  384.215      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  381.465      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  378.708      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  375.944      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  373.175      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  370.401      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  368.157      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  367.621      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  364.835      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  362.047      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  359.252      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   6  T =  356.454      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  353.651      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   7  T =  350.845      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  348.034      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  345.220      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  342.403      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  339.582      P =  205353.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   5  T =  336.753      P =  205353.      V =  0.00000      Q =  0.00000    
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+ Report Writer entered                                                            Time =     98.20
+
+      BEGIN HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+ Results generated                                                                Time =     98.34
+
+RUN SAVED
+
+
+
+ NO ERRORS OR WARNINGS GENERATED
+
+
+ NO ERRORS OR WARNINGS GENERATED
+
+
+*** INPUT SPECIFICATION MESSAGES ***
+
+ CHANGES WERE MADE TO BLOCK        HX       06/04/2025   15:44:42:99 
+ BLOCK HX HEATX
+     PARAM DELT-HOT=9.35 <C> CALC-TYPE=DESIGN MIN-TAPP=5.  &
+         U-OPTION=PHASE F-OPTION=CONSTANT CALC-METHOD=SHORTCUT
+     FEEDS HOT=ABSMEA COLD=STRPMEAC
+     OUTLETS-HOT ABSMEAC
+     OUTLETS-COLD STRPMEAH
+     FLASH-SPECS ABSMEAC NPHASE=2 FREE-WATER=NO MAXIT=250
+     FLASH-SPECS STRPMEAH NPHASE=2 FREE-WATER=NO MAXIT=250
+     HOT-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+     COLD-SIDE DP-OPTION=CONSTANT DPPARMOPT=NO
+     TQ-PARAM CURVE=YES
+
+ PDF updated                                                                      TIME =    245.73
+ THIS COPY OF ASPEN PLUS LICENSED TO VIENNA UNIVERSITY OF TEC        
+ 
+ DESIGN SPEC: DS-1 WILL BE INTERPRETED 
+ 
+
+
+Calculations begin                                                              time    245.74
+
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =    245.74
+      SPECIFICATION: HOT APPROACH TEMP     9.3500    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.14  PIN=0.20535E+06   TOUT=  336.81  POUT=0.20535E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.78  POUT=0.20000E+06
+                              DUTY=0.10886E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =    245.81
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.26489    
+              1     0.16394E-01
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =    246.46
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511798      Q = -259899.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =    246.47
+      ITER   0 For Tear Streams: BOT-LQU   TOP-LQU
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =    246.47
+      KODE = 4  NTRIAL =  13  T =  395.150      P =  205388.      V = 7.509834E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =    246.47
+      SPECIFICATION: HOT APPROACH TEMP     9.3500    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20539E+06   TOUT=  336.81  POUT=0.20539E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.79  POUT=0.20000E+06
+                              DUTY=0.10890E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =    246.47
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.60331    
+              1     0.19444E-01
+              2     0.37058E-05
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =    247.46
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511588      Q = -259768.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =    247.46
+      ITER   1 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    1:  12 VARS NOT CONVERGED, MAX ERR/TOL      30.420        TIME =    247.46
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =    247.46
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205416.      V = 7.521044E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =    247.46
+      SPECIFICATION: HOT APPROACH TEMP     9.3500    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20542E+06   TOUT=  336.81  POUT=0.20542E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.78  POUT=0.20000E+06
+                              DUTY=0.10886E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =    247.47
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.34528    
+              1     0.23039E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =    247.98
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511736      Q = -259885.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =    247.98
+      ITER   2 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    2:  11 VARS NOT CONVERGED, MAX ERR/TOL     -17.318        TIME =    247.98
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =    247.98
+      KODE = 4  NTRIAL =   7  T =  395.150      P =  205399.      V = 7.523211E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =    247.98
+      SPECIFICATION: HOT APPROACH TEMP     9.3500    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20540E+06   TOUT=  336.81  POUT=0.20540E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.78  POUT=0.20000E+06
+                              DUTY=0.10887E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =    247.98
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.11278    
+              1     0.19714E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =    248.50
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511683      Q = -259999.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =    248.50
+      ITER   3 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    3:  12 VARS NOT CONVERGED, MAX ERR/TOL     -11.557        TIME =    248.50
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =    248.50
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205386.      V = 7.526149E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =    248.50
+      SPECIFICATION: HOT APPROACH TEMP     9.3500    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20539E+06   TOUT=  336.81  POUT=0.20539E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.78  POUT=0.20000E+06
+                              DUTY=0.10887E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =    248.50
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.12456    
+              1     0.12923E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =    249.27
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511691      Q = -260053.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =    249.27
+      ITER   4 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    4:  12 VARS NOT CONVERGED, MAX ERR/TOL     -9.3182        TIME =    249.27
+
+      UOS BLOCK REBOILER MODEL: FLASH2                                            TIME =    249.27
+      KODE = 4  NTRIAL =   4  T =  395.150      P =  205361.      V = 7.529005E-02  Q =  0.00000    
+
+      UOS BLOCK HX       MODEL: HEATX                                             TIME =    249.28
+      SPECIFICATION: HOT APPROACH TEMP     9.3500    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20536E+06   TOUT=  336.81  POUT=0.20536E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.79  POUT=0.20000E+06
+                              DUTY=0.10888E+07
+
+      UOS BLOCK STRIPPER MODEL: RADFRAC                                           TIME =    249.28
+
+  X-TRANS =   0  Y-TRANS =   0
+
+       RateSep convergence iterations: STRIPPER
+           Iter     Err/Tol
+              0     0.14103    
+              1     0.27861E-02
+
+      UOS BLOCK COND     MODEL: FLASH2                                            TIME =    249.66
+      KODE = 2  NTRIAL =   2  T =  303.150      P =  200000.      V = 0.511661      Q = -260147.    
+
+      CONVERGENCE BLOCK $OLVER01  METHOD: BROYDEN                                 TIME =    249.66
+      ITER   5 For Tear Streams: BOT-LQU   TOP-LQU
+
+  LOOP $OLVER01 ITER    5:     *** CONVERGED *** , MAX ERR/TOL     0.87585        TIME =    249.66
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =    249.66
+      ITER   0 For Specs:        DS-1
+
+      CONVERGENCE BLOCK $OLVER02  METHOD: SECANT                                  TIME =    249.66
+      ITER   1 For Specs:        DS-1
+      SPEC   1 ERROR = -0.33543                              X =  0.91213E+06
+
+  LOOP $OLVER02 ITER    1:     *** CONVERGED *** , MAX ERR/TOL    -0.67086        TIME =    249.66
+
+      UOS BLOCK MIXER    MODEL: MIXER                                             TIME =    249.66
+      KODE = 1  NTRIAL =   3  T =  336.765      P =  106000.      V =  0.00000      Q =  0.00000    
+
+      UOS BLOCK COOLER   MODEL: HEATER                                            TIME =    249.66
+      KODE = 2  NTRIAL =   2  T =  308.150      P =  106000.      V =  0.00000      Q = -527430.    
+
+      GENERATING RESULTS FOR UOS BLOCK COOLER   MODEL: HEATER                     TIME =    249.66
+
+      GENERATING RESULTS FOR UOS BLOCK HX       MODEL: HEATX                      TIME =    249.66
+      SPECIFICATION: HOT APPROACH TEMP     9.3500    
+      FLOW TYPE:     COUNTERCURRENT  
+      HOT:  TIN=  395.15  PIN=0.20536E+06   TOUT=  336.81  POUT=0.20536E+06
+      COLD: TIN=  327.46  PIN=0.20000E+06   TOUT=  379.79  POUT=0.20000E+06
+      AREA= 126.93           DUTY=0.10887E+07       FT=1.00000
+
+      BEGIN HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 1.049572E-02
+      KODE = 1  NTRIAL =   4  T =  379.786      P =  200000.      V = 1.049572E-02  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 1 VAR = 8.266883E-03
+      KODE = 1  NTRIAL =   3  T =  378.466      P =  200000.      V = 8.266883E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 6.255501E-03
+      KODE = 1  NTRIAL =   2  T =  377.026      P =  200000.      V = 6.255501E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 1 VAR = 4.454040E-03
+      KODE = 1  NTRIAL =   2  T =  375.468      P =  200000.      V = 4.454040E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   7 IFLAG = 1 VAR = 2.849563E-03
+      KODE = 1  NTRIAL =   2  T =  373.792      P =  200000.      V = 2.849563E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 1 VAR = 1.431477E-03
+      KODE = 1  NTRIAL =   3  T =  372.000      P =  200000.      V = 1.431477E-03  Q =  0.00000    
+      H-LOOP : NTRIAL =   7 IFLAG = 1 VAR = 2.702842E-04
+      KODE = 1  NTRIAL =   3  T =  370.034      P =  200000.      V = 2.702842E-04  Q =  0.00000    
+      H-LOOP : NTRIAL =  12 IFLAG = 1 VAR = 2.649856E-05
+      KODE = 1  NTRIAL =   4  T =  367.407      P =  200000.      V = 2.649856E-05  Q =  0.00000    
+      H-LOOP : NTRIAL =   9 IFLAG = 1 VAR = 8.110359E-06
+      KODE = 1  NTRIAL =   2  T =  364.608      P =  200000.      V = 8.110359E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =   7 IFLAG = 1 VAR = 2.331826E-06
+      KODE = 1  NTRIAL =   2  T =  361.791      P =  200000.      V = 2.331826E-06  Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 2 VAR =  358.963    
+      KODE = 1  NTRIAL =   1  T =  358.963      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 3  NTRIAL =   6  T =  359.536      P =  200000.      V =  0.00000      Q = -507944.    
+      KODE = 1  NTRIAL =  14  T =  358.964      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  356.126      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  353.282      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  350.432      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  347.576      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  344.714      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  341.848      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  10  T =  338.977      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   8  T =  336.103      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  333.225      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =   9  T =  330.343      P =  200000.      V =  0.00000      Q =  0.00000    
+      KODE = 1  NTRIAL =  13  T =  327.458      P =  200000.      V =  0.00000      Q =  0.00000    
+
+      BEGIN HOT-TQCURVE  INLET   
+      H-LOOP : NTRIAL =   1 IFLAG = 2 VAR =  395.150    
+      KODE = 1  NTRIAL =   1  T =  395.150      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 2 VAR =  392.427    
+      KODE = 1  NTRIAL =   2  T =  392.427      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 2 VAR =  389.701    
+      KODE = 1  NTRIAL =   2  T =  389.701      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   4 IFLAG = 2 VAR =  386.966    
+      KODE = 1  NTRIAL =   2  T =  386.966      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  384.225    
+      KODE = 1  NTRIAL =   1  T =  384.225      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  381.476    
+      KODE = 1  NTRIAL =   1  T =  381.476      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  378.722    
+      KODE = 1  NTRIAL =   1  T =  378.722      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  375.961    
+      KODE = 1  NTRIAL =   1  T =  375.961      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  373.194    
+      KODE = 1  NTRIAL =   1  T =  373.194      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  370.422    
+      KODE = 1  NTRIAL =   1  T =  370.422      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  368.207    
+      KODE = 1  NTRIAL =   2  T =  368.207      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  367.645    
+      KODE = 1  NTRIAL =   2  T =  367.645      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  364.862    
+      KODE = 1  NTRIAL =   2  T =  364.862      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  362.075    
+      KODE = 1  NTRIAL =   2  T =  362.075      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  359.283    
+      KODE = 1  NTRIAL =   2  T =  359.283      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   5 IFLAG = 2 VAR =  356.487    
+      KODE = 1  NTRIAL =   2  T =  356.487      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 2 VAR =  353.687    
+      KODE = 1  NTRIAL =   1  T =  353.687      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 2 VAR =  350.882    
+      KODE = 1  NTRIAL =   1  T =  350.882      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 2 VAR =  348.074    
+      KODE = 1  NTRIAL =   1  T =  348.074      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 2 VAR =  345.263    
+      KODE = 1  NTRIAL =   1  T =  345.263      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 2 VAR =  342.448    
+      KODE = 1  NTRIAL =   2  T =  342.448      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 2 VAR =  339.629    
+      KODE = 1  NTRIAL =   2  T =  339.629      P =  205361.      V =  0.00000      Q =  0.00000    
+      H-LOOP : NTRIAL =   6 IFLAG = 2 VAR =  336.808    
+      KODE = 1  NTRIAL =   2  T =  336.808      P =  205361.      V =  0.00000      Q =  0.00000    
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE CALCULATIONS FOR BLOCK HX      
+
+ Report Writer entered                                                            Time =    249.89
+
+      BEGIN HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+      BEGIN COLD-TQCURVE INLET   
+
+      BEGIN HOT-TQCURVE  INLET   
+      END HEATX TQ-CURVE REPORT FOR BLOCK HX      
+
+ Results generated                                                                Time =    249.99
+
+RUN SAVED
+
+
+
+ NO ERRORS OR WARNINGS GENERATED

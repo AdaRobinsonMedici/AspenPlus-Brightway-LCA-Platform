@@ -1,0 +1,10 @@
+INPUT: Post_combustion_solvent_based_MEA.inm
+MODNAME: apmain
+RUNID: Post_combustion_solvent_based_MEA
+NEW_RUNID: Post_combustion_solvent_based_MEA
+OLD_RUNID: Post_combustion_solvent_based_MEA
+PDF: Post_combustion_solvent_based_MEA.appdf
+USERNAME: jkueng
+XMOD: C:\Program Files\AspenTech\Aspen Plus V14.0\Engine\xeq\apmain
+SPONLY:
+DBCONN: _4033vkr.ads
