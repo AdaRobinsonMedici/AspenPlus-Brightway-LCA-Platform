@@ -1,7 +1,7 @@
 <p style="text-align: justify;">
-⚠️ Work in progress — License pending. No reuse or redistribution permitted at this time.
-</p>
+This Github repository is related to the conference paper "Open-source Automation of Aspen Plus simulation and Life Cycle Assessment for Carbon Capture: From Automation to Intelligent Scenario Optimization" presented on the E2DT 2025 conference in Italy, Palermo. It provides an open-source framework that couples Aspen Plus process simulations with the Python-based Brightway package to conduct Life Cycle Assessments (LCA). The approach is demonstrated on a well-studied, solvent-based post-combustion carbon capture process using Monoethanolamine (MEA) as a case study. Beside the full framework, tutorials are provided, explaining the most important functionalities of the Aspen-Python-Interface and Brightway.<\p>
 
 <p style="text-align: justify;">
-Ready-to-use open-source <strong>Python</strong> framework automatically integrating <strong>Aspen Plus</strong> process simulations with the Python-based <strong>Brightway</strong> package to conduct Life Cycle Assessments (LCA). We demonstrate the approach on a well-studied, solvent-based post-combustion <strong>carbon capture</strong> system using Monoethanolamine (MEA) through streamlined <strong>Jupyter</strong> notebooks.
-</p>
+Please note that this ReadMe-file is an early version and will be refined after the conference. In general, we warmly invite you to give us feedback for improving the repository.
+<\p>
+
