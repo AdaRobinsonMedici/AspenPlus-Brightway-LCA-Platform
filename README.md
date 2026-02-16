@@ -13,3 +13,4 @@ This Github repository is related to the conference paper "Open-source Automatio
 <p style="text-align: justify;">
 Please note that this ReadMe-file is an early version and will be refined after the conference. In general, we warmly invite you to give us feedback for improving the repository.
 
+Publication: https://doi.org/10.3303/CET25119068
